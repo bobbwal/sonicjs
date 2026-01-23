@@ -150,7 +150,7 @@ export function getQuillInitScript(): string {
             formats: [
               'header', 'bold', 'italic', 'underline', 'strike',
               'color', 'background', 'align',
-              'list', 'bullet', 'indent',
+              'list', 'indent',
               'blockquote', 'code-block',
               'link', 'image', 'video'
             ]

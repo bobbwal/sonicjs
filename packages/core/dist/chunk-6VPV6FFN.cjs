@@ -1,10 +1,10 @@
 'use strict';
 
 var chunk7FOAMNTI_cjs = require('./chunk-7FOAMNTI.cjs');
-var chunkWRMQX2TP_cjs = require('./chunk-WRMQX2TP.cjs');
-var chunkILZ3DP4I_cjs = require('./chunk-ILZ3DP4I.cjs');
-var chunkYRWJSXFT_cjs = require('./chunk-YRWJSXFT.cjs');
-var chunkAZLU3ROK_cjs = require('./chunk-AZLU3ROK.cjs');
+var chunkX75QKPYF_cjs = require('./chunk-X75QKPYF.cjs');
+var chunkMPT5PA6U_cjs = require('./chunk-MPT5PA6U.cjs');
+var chunkH2FWK3AC_cjs = require('./chunk-H2FWK3AC.cjs');
+var chunkBZC4FYW7_cjs = require('./chunk-BZC4FYW7.cjs');
 var chunkYHW27CBV_cjs = require('./chunk-YHW27CBV.cjs');
 var chunkJZM4YII7_cjs = require('./chunk-JZM4YII7.cjs');
 var chunkRCQ2HIQD_cjs = require('./chunk-RCQ2HIQD.cjs');
@@ -76,7 +76,7 @@ apiContentCrudRoutes.get("/:id", async (c) => {
     }, 500);
   }
 });
-apiContentCrudRoutes.post("/", chunkWRMQX2TP_cjs.requireAuth(), async (c) => {
+apiContentCrudRoutes.post("/", chunkX75QKPYF_cjs.requireAuth(), async (c) => {
   try {
     const db = c.env.DB;
     const user = c.get("user");
@@ -142,7 +142,7 @@ apiContentCrudRoutes.post("/", chunkWRMQX2TP_cjs.requireAuth(), async (c) => {
     }, 500);
   }
 });
-apiContentCrudRoutes.put("/:id", chunkWRMQX2TP_cjs.requireAuth(), async (c) => {
+apiContentCrudRoutes.put("/:id", chunkX75QKPYF_cjs.requireAuth(), async (c) => {
   try {
     const id = c.req.param("id");
     const db = c.env.DB;
@@ -206,7 +206,7 @@ apiContentCrudRoutes.put("/:id", chunkWRMQX2TP_cjs.requireAuth(), async (c) => {
     }, 500);
   }
 });
-apiContentCrudRoutes.delete("/:id", chunkWRMQX2TP_cjs.requireAuth(), async (c) => {
+apiContentCrudRoutes.delete("/:id", chunkX75QKPYF_cjs.requireAuth(), async (c) => {
   try {
     const id = c.req.param("id");
     const db = c.env.DB;
@@ -242,7 +242,7 @@ apiRoutes.use("*", async (c, next) => {
   c.header("X-Response-Time", `${totalTime}ms`);
 });
 apiRoutes.use("*", async (c, next) => {
-  const cacheEnabled = await chunkWRMQX2TP_cjs.isPluginActive(c.env.DB, "core-cache");
+  const cacheEnabled = await chunkX75QKPYF_cjs.isPluginActive(c.env.DB, "core-cache");
   c.set("cacheEnabled", cacheEnabled);
   await next();
 });
@@ -600,7 +600,7 @@ var fileValidationSchema = zod.z.object({
   // 50MB max
 });
 var apiMediaRoutes = new hono.Hono();
-apiMediaRoutes.use("*", chunkWRMQX2TP_cjs.requireAuth());
+apiMediaRoutes.use("*", chunkX75QKPYF_cjs.requireAuth());
 apiMediaRoutes.post("/upload", async (c) => {
   try {
     const user = c.get("user");
@@ -1344,8 +1344,8 @@ apiSystemRoutes.get("/env", (c) => {
 });
 var api_system_default = apiSystemRoutes;
 var adminApiRoutes = new hono.Hono();
-adminApiRoutes.use("*", chunkWRMQX2TP_cjs.requireAuth());
-adminApiRoutes.use("*", chunkWRMQX2TP_cjs.requireRole(["admin", "editor"]));
+adminApiRoutes.use("*", chunkX75QKPYF_cjs.requireAuth());
+adminApiRoutes.use("*", chunkX75QKPYF_cjs.requireRole(["admin", "editor"]));
 adminApiRoutes.get("/stats", async (c) => {
   try {
     const db = c.env.DB;
@@ -1855,7 +1855,7 @@ adminApiRoutes.delete("/collections/:id", async (c) => {
 });
 adminApiRoutes.get("/migrations/status", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-45FBMFPL.cjs');
+    const { MigrationService: MigrationService2 } = await import('./migrations-SB3ZXCDA.cjs');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const status = await migrationService.getMigrationStatus();
@@ -1880,7 +1880,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
         error: "Unauthorized. Admin access required."
       }, 403);
     }
-    const { MigrationService: MigrationService2 } = await import('./migrations-45FBMFPL.cjs');
+    const { MigrationService: MigrationService2 } = await import('./migrations-SB3ZXCDA.cjs');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const result = await migrationService.runPendingMigrations();
@@ -1899,7 +1899,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
 });
 adminApiRoutes.get("/migrations/validate", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-45FBMFPL.cjs');
+    const { MigrationService: MigrationService2 } = await import('./migrations-SB3ZXCDA.cjs');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const validation = await migrationService.validateSchema();
@@ -1926,7 +1926,7 @@ function renderLoginPage(data, demoLoginActive = false) {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Login - SonicJS AI</title>
-      <link rel="icon" type="image/x-icon" href="https://demo.sonicjs.com/images/favicon.ico">
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg">
       <script src="https://unpkg.com/htmx.org@2.0.3"></script>
       <script src="https://cdn.tailwindcss.com"></script>
       <script>
@@ -1974,8 +1974,8 @@ function renderLoginPage(data, demoLoginActive = false) {
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div class="bg-zinc-900 shadow-sm ring-1 ring-white/10 rounded-xl px-6 py-8 sm:px-10">
             <!-- Alerts -->
-            ${data.error ? `<div class="mb-6">${chunkAZLU3ROK_cjs.renderAlert({ type: "error", message: data.error })}</div>` : ""}
-            ${data.message ? `<div class="mb-6">${chunkAZLU3ROK_cjs.renderAlert({ type: "success", message: data.message })}</div>` : ""}
+            ${data.error ? `<div class="mb-6">${chunkBZC4FYW7_cjs.renderAlert({ type: "error", message: data.error })}</div>` : ""}
+            ${data.message ? `<div class="mb-6">${chunkBZC4FYW7_cjs.renderAlert({ type: "success", message: data.message })}</div>` : ""}
 
             <!-- Form Response (HTMX target) -->
             <div id="form-response" class="mb-6"></div>
@@ -2103,7 +2103,7 @@ function renderRegisterPage(data) {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Register - SonicJS AI</title>
-      <link rel="icon" type="image/x-icon" href="https://demo.sonicjs.com/images/favicon.ico">
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg">
       <script src="https://unpkg.com/htmx.org@2.0.3"></script>
       <script src="https://cdn.tailwindcss.com"></script>
       <script>
@@ -2126,42 +2126,20 @@ function renderRegisterPage(data) {
       <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <!-- Logo Section -->
         <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
-          <div class="mx-auto w-64 mb-8">
-            <svg class="w-full h-auto" viewBox="380 1300 2250 400" aria-hidden="true">
-              <path fill="#F1F2F2" d="M476.851,1404.673h168.536c4.714,0,8.695-1.618,11.944-4.866c3.241-3.241,4.866-7.222,4.866-11.943    c0-2.357-0.443-4.569-1.327-6.636c-0.885-2.06-2.067-3.829-3.539-5.308c-1.479-1.472-3.249-2.654-5.308-3.538    c-2.067-0.885-4.279-1.327-6.635-1.327H476.851c-20.057,0-37.158,7.154-51.313,21.454c-14.155,14.308-21.233,31.483-21.233,51.534    c0,20.058,7.078,37.234,21.233,51.534c14.155,14.308,31.255,21.454,51.313,21.454h112.357c10.907,0,20.196,3.837,27.868,11.502    c7.666,7.672,11.502,16.885,11.502,27.646c0,10.769-3.836,19.982-11.502,27.647c-7.672,7.673-16.961,11.502-27.868,11.502H421.115    c-4.721,0-8.702,1.624-11.944,4.865c-3.248,3.249-4.866,7.23-4.866,11.944c0,3.248,0.733,6.123,2.212,8.626    c1.472,2.509,3.462,4.499,5.971,5.972c2.502,1.472,5.378,2.212,8.626,2.212h168.094c20.052,0,37.227-7.078,51.534-21.234    c14.3-14.155,21.454-31.331,21.454-51.534c0-20.196-7.154-37.379-21.454-51.534c-14.308-14.156-31.483-21.234-51.534-21.234    H476.851c-10.616,0-19.76-3.905-27.426-11.721c-7.672-7.811-11.501-17.101-11.501-27.87c0-10.761,3.829-19.975,11.501-27.647    C457.091,1408.508,466.235,1404.673,476.851,1404.673z"></path>
-              <path fill="#F1F2F2" d="M974.78,1398.211c-5.016,6.574-10.034,13.146-15.048,19.721c-1.828,2.398-3.657,4.796-5.487,7.194    c1.994,1.719,3.958,3.51,5.873,5.424c18.724,18.731,28.089,41.216,28.089,67.459c0,26.251-9.366,48.658-28.089,67.237    c-18.731,18.579-41.215,27.868-67.459,27.868c-9.848,0-19.156-1.308-27.923-3.923l-4.185,3.354    c-8.587,6.885-17.154,13.796-25.725,20.702c17.52,8.967,36.86,13.487,58.054,13.487c35.533,0,65.91-12.608,91.124-37.821    c25.214-25.215,37.821-55.584,37.821-91.125c0-35.534-12.607-65.911-37.821-91.126    C981.004,1403.663,977.926,1400.854,974.78,1398.211z"></path>
-              <path fill="#F1F2F2" d="M1364.644,1439.619c-4.72,0-8.702,1.624-11.943,4.865c-3.249,3.249-4.866,7.23-4.866,11.944v138.014    l-167.651-211.003c-0.297-0.586-0.74-1.03-1.327-1.326c-4.721-4.714-10.249-7.742-16.588-9.069    c-6.346-1.326-12.608-0.732-18.801,1.77c-6.192,2.509-11.059,6.49-14.598,11.944c-3.539,5.46-5.308,11.577-5.308,18.357v208.348    c0,4.721,1.618,8.703,4.866,11.944c3.241,3.241,7.222,4.865,11.943,4.865c2.945,0,5.751-0.738,8.405-2.211    c2.654-1.472,4.713-3.463,6.193-5.971c1.473-2.503,2.212-5.378,2.212-8.627v-205.251l166.325,209.675    c2.06,2.654,4.423,4.865,7.078,6.635c5.308,3.829,11.349,5.75,18.137,5.75c5.308,0,10.464-1.182,15.482-3.538    c3.539-1.769,6.56-4.127,9.069-7.078c2.502-2.945,4.491-6.338,5.971-10.175c1.473-3.829,2.212-7.664,2.212-11.501v-141.552    c0-4.714-1.624-8.695-4.865-11.944C1373.339,1441.243,1369.359,1439.619,1364.644,1439.619z"></path>
-              <path fill="#F1F2F2" d="M1508.406,1432.983c-2.654-1.472-5.46-2.212-8.404-2.212c-4.721,0-8.703,1.7-11.944,5.087    c-3.249,3.395-4.865,7.3-4.865,11.723v163.228c0,4.721,1.616,8.702,4.865,11.943c3.241,3.249,7.223,4.866,11.944,4.866    c2.944,0,5.751-0.732,8.404-2.212c2.655-1.472,4.714-3.539,6.193-6.194c1.473-2.654,2.213-5.453,2.213-8.404V1447.58    c0-2.945-0.74-5.75-2.213-8.405C1513.12,1436.522,1511.06,1434.462,1508.406,1432.983z"></path>
-              <path fill="#F1F2F2" d="M1499.78,1367.957c-4.575,0-8.481,1.625-11.722,4.866c-3.249,3.249-4.865,7.23-4.865,11.943    c0,2.951,0.732,5.75,2.212,8.405c1.472,2.654,3.463,4.721,5.971,6.193c2.503,1.479,5.378,2.212,8.627,2.212    c4.423,0,8.328-1.618,11.721-4.865c3.387-3.243,5.088-7.224,5.088-11.944c0-4.713-1.701-8.694-5.088-11.943    C1508.33,1369.582,1504.349,1367.957,1499.78,1367.957z"></path>
-              <path fill="#F1F2F2" d="M1859.627,1369.727H1747.27c-35.388,0-65.69,12.607-90.904,37.821    c-25.213,25.215-37.82,55.591-37.82,91.125c0,35.54,12.607,65.911,37.82,91.125c25.215,25.215,55.516,37.821,90.904,37.821h56.178    c4.714,0,8.695-1.618,11.944-4.866c3.241-3.241,4.865-7.222,4.865-11.943c0-4.714-1.624-8.695-4.865-11.943    c-3.249-3.243-7.23-4.866-11.944-4.866h-56.178c-26.251,0-48.659-9.359-67.237-28.09c-18.579-18.723-27.868-41.207-27.868-67.459    c0-26.243,9.29-48.659,27.868-67.237c18.579-18.579,40.987-27.868,67.237-27.868h112.357c4.714,0,8.696-1.693,11.944-5.087    c3.241-3.387,4.865-7.368,4.865-11.943c0-4.569-1.624-8.475-4.865-11.723C1868.322,1371.351,1864.341,1369.727,1859.627,1369.727z    "></path>
-              <path fill="#06b6d4" d="M2219.256,1371.054h-112.357c-4.423,0-8.336,1.624-11.723,4.865c-3.393,3.249-5.087,7.23-5.087,11.944    c0,4.721,1.694,8.702,5.087,11.943c3.387,3.249,7.3,4.866,11.723,4.866h95.547v95.105c0,26.251-9.365,48.659-28.088,67.237    c-18.731,18.579-41.215,27.868-67.459,27.868c-26.251,0-48.659-9.289-67.237-27.868c-18.579-18.579-27.868-40.987-27.868-67.237    c0-4.713-1.701-8.771-5.088-12.165c-3.393-3.387-7.374-5.087-11.943-5.087c-4.575,0-8.481,1.7-11.722,5.087    c-3.249,3.393-4.865,7.451-4.865,12.165c0,35.388,12.607,65.69,37.82,90.904c25.215,25.213,55.584,37.82,91.126,37.82    c35.532,0,65.91-12.607,91.125-37.82c25.214-25.215,37.82-55.516,37.82-90.904v-111.915c0-4.714-1.624-8.695-4.865-11.944    C2227.951,1372.678,2223.971,1371.054,2219.256,1371.054z"></path>
-              <path fill="#06b6d4" d="M2574.24,1502.875c-14.306-14.156-31.483-21.234-51.533-21.234H2410.35    c-10.617,0-19.762-3.829-27.426-11.501c-7.672-7.664-11.501-16.954-11.501-27.868c0-10.907,3.829-20.196,11.501-27.868    c7.664-7.664,16.809-11.501,27.426-11.501h112.357c4.714,0,8.695-1.617,11.944-4.866c3.241-3.241,4.865-7.222,4.865-11.943    c0-4.714-1.624-8.695-4.865-11.944c-3.249-3.241-7.23-4.865-11.944-4.865H2410.35c-20.058,0-37.158,7.154-51.313,21.454    c-14.156,14.308-21.232,31.483-21.232,51.534c0,20.058,7.077,37.234,21.232,51.534c14.156,14.308,31.255,21.454,51.313,21.454    h112.357c7.078,0,13.637,1.77,19.684,5.308c6.042,3.539,10.838,8.336,14.377,14.377c3.538,6.047,5.307,12.607,5.307,19.685    c0,10.616-3.835,19.76-11.501,27.425c-7.672,7.673-16.961,11.502-27.868,11.502h-168.094c-4.721,0-8.703,1.7-11.944,5.087    c-3.249,3.393-4.865,7.374-4.865,11.943c0,4.576,1.616,8.481,4.865,11.723c3.241,3.249,7.223,4.866,11.944,4.866h168.094    c20.051,0,37.227-7.078,51.533-21.234c14.302-14.155,21.454-31.331,21.454-51.534    C2595.695,1534.213,2588.542,1517.03,2574.24,1502.875z"></path>
-              <path fill="#06b6d4" d="M854.024,1585.195l20.001-16.028c16.616-13.507,33.04-27.265,50.086-40.251    c1.13-0.861,2.9-1.686,2.003-3.516c-0.843-1.716-2.481-2.302-4.484-2.123c-8.514,0.765-17.016-0.538-25.537-0.353    c-1.124,0.024-2.768,0.221-3.163-1.25c-0.371-1.369,1.088-2.063,1.919-2.894c6.26-6.242,12.574-12.43,18.816-18.691    c9.303-9.327,18.565-18.714,27.851-28.066c1.848-1.859,3.701-3.713,5.549-5.572c2.655-2.661,5.309-5.315,7.958-7.982    c0.574-0.579,1.259-1.141,1.246-1.94c-0.004-0.257-0.078-0.538-0.254-0.853c-0.556-0.981-1.441-1.1-2.469-0.957    c-0.658,0.096-1.315,0.185-1.973,0.275c-3.844,0.538-7.689,1.076-11.533,1.608c-3.641,0.505-7.281,1.02-10.922,1.529    c-4.162,0.582-8.324,1.158-12.486,1.748c-1.142,0.161-2.409,1.662-3.354,0.508c-0.419-0.508-0.431-1.028-0.251-1.531    c0.269-0.741,0.957-1.441,1.387-2.021c3.414-4.58,6.882-9.124,10.356-13.662c1.74-2.272,3.48-4.544,5.214-6.822    c4.682-6.141,9.369-12.281,14.051-18.422c0.09-0.119,0.181-0.237,0.271-0.355c6.848-8.98,13.7-17.958,20.553-26.936    c0.488-0.64,0.977-1.28,1.465-1.92c2.159-2.828,4.315-5.658,6.476-8.486c4.197-5.501,8.454-10.954,12.67-16.442    c0.263-0.347,0.538-0.718,0.717-1.106c0.269-0.586,0.299-1.196-0.335-1.776c-0.825-0.753-1.8-0.15-2.595,0.419    c-0.67,0.472-1.333,0.957-1.955,1.489c-2.206,1.889-4.401,3.797-6.595,5.698c-3.958,3.438-7.922,6.876-11.976,10.194    c-2.443,2.003-4.865,4.028-7.301,6.038c-18.689-10.581-39.53-15.906-62.549-15.906c-35.54,0-65.911,12.607-91.125,37.82    c-25.214,25.215-37.821,55.592-37.821,91.126c0,35.54,12.607,65.91,37.821,91.125c4.146,4.146,8.445,7.916,12.87,11.381    c-9.015,11.14-18.036,22.277-27.034,33.429c-1.208,1.489-3.755,3.151-2.745,4.891c0.078,0.144,0.173,0.281,0.305,0.425    c1.321,1.429,3.492-1.303,4.933-2.457c6.673-5.333,13.333-10.685,19.982-16.042c3.707-2.984,7.417-5.965,11.124-8.952    c1.474-1.188,2.951-2.373,4.425-3.561c6.41-5.164,12.816-10.333,19.238-15.481L854.024,1585.195z M797.552,1498.009    c0-26.243,9.29-48.728,27.868-67.459c18.579-18.723,40.987-28.089,67.238-28.089c12.273,0,23.712,2.075,34.34,6.171    c-3.37,2.905-6.734,5.816-10.069,8.762c-6.075,5.351-12.365,10.469-18.667,15.564c-4.179,3.378-8.371,6.744-12.514,10.164    c-7.54,6.23-15.037,12.52-22.529,18.804c-7.091,5.955-14.182,11.904-21.19,17.949c-1.136,0.974-3.055,1.907-2.135,3.94    c0.831,1.836,2.774,1.417,4.341,1.578l12.145-0.599l14.151-0.698c1.031-0.102,2.192-0.257,2.89,0.632    c0.034,0.044,0.073,0.078,0.106,0.127c1.017,1.561-0.67,2.105-1.387,2.942c-6.308,7.318-12.616,14.637-18.978,21.907    c-8.161,9.339-16.353,18.649-24.544,27.958c-2.146,2.433-4.275,4.879-6.422,7.312c-1.034,1.172-2.129,2.272-1.238,3.922    c0.933,1.728,2.685,1.752,4.323,1.602c4.134-0.367,8.263-0.489,12.396-0.492c0.242,0,0.485-0.005,0.728-0.004    c2.711,0.009,5.422,0.068,8.134,0.145c2.582,0.074,5.166,0.165,7.752,0.249c0.275,1.62-0.879,2.356-1.62,3.259    c-1.333,1.626-2.667,3.247-4,4.867c-4.315,5.252-8.62,10.514-12.928,15.772c-3.562-2.725-7.007-5.733-10.324-9.051    C806.842,1546.667,797.552,1524.26,797.552,1498.009z"></path>
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-white">
+            <svg class="h-7 w-7 text-zinc-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
           </div>
-          <h2 class="mt-6 text-xl font-medium text-white">${data.isSetup ? "Welcome to SonicJS" : "Create Account"}</h2>
-          ${data.isSetup ? `<p class="mt-2 text-sm text-zinc-400">Create your admin account to get started.</p>` : `<p class="mt-2 text-sm text-zinc-400">Create your account and get started</p>`}
+          <h1 class="mt-6 text-3xl font-semibold tracking-tight text-white">SonicJS AI</h1>
+          <p class="mt-2 text-sm text-zinc-400">Create your account and get started</p>
         </div>
 
         <!-- Form Container -->
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div class="bg-zinc-900 shadow-sm ring-1 ring-white/10 rounded-xl px-6 py-8 sm:px-10">
-            <!-- Setup Banner -->
-            ${data.isSetup ? `
-              <div class="mb-6 rounded-lg bg-blue-500/10 p-4 ring-1 ring-blue-500/20">
-                <div class="flex items-start gap-x-3">
-                  <svg class="h-5 w-5 text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
-                  <div class="flex-1">
-                    <p class="text-sm font-medium text-blue-300">First-time Setup</p>
-                    <p class="text-sm text-blue-400/80 mt-1">This account will be the administrator with full access to manage your SonicJS installation.</p>
-                  </div>
-                </div>
-              </div>
-            ` : ""}
             <!-- Alerts -->
-            ${data.error ? `<div class="mb-6">${chunkAZLU3ROK_cjs.renderAlert({ type: "error", message: data.error })}</div>` : ""}
+            ${data.error ? `<div class="mb-6">${chunkBZC4FYW7_cjs.renderAlert({ type: "error", message: data.error })}</div>` : ""}
 
             <!-- Form -->
             <form
@@ -2274,7 +2252,6 @@ function renderRegisterPage(data) {
     </html>
   `;
 }
-var adminExistsCache = null;
 async function isRegistrationEnabled(db) {
   try {
     const plugin = await db.prepare("SELECT settings FROM plugins WHERE id = ?").bind("core-auth").first();
@@ -2295,21 +2272,6 @@ async function isFirstUserRegistration(db) {
   } catch {
     return false;
   }
-}
-async function checkAdminUserExists(db) {
-  if (adminExistsCache !== null) {
-    return adminExistsCache;
-  }
-  try {
-    const result = await db.prepare("SELECT id FROM users WHERE role = ?").bind("admin").first();
-    adminExistsCache = !!result;
-    return adminExistsCache;
-  } catch {
-    return false;
-  }
-}
-function setAdminExists() {
-  adminExistsCache = true;
 }
 var baseRegistrationSchema = zod.z.object({
   email: zod.z.string().email("Valid email is required"),
@@ -2372,11 +2334,8 @@ authRoutes.get("/register", async (c) => {
     }
   }
   const error = c.req.query("error");
-  const isSetup = c.req.query("setup") === "true";
   const pageData = {
-    error: error || void 0,
-    isSetup: isSetup && isFirstUser
-    // Only show setup message if truly first user
+    error: error || void 0
   };
   return c.html(renderRegisterPage(pageData));
 });
@@ -2422,7 +2381,7 @@ authRoutes.post(
       if (existingUser) {
         return c.json({ error: "User with this email or username already exists" }, 400);
       }
-      const passwordHash = await chunkWRMQX2TP_cjs.AuthManager.hashPassword(password);
+      const passwordHash = await chunkX75QKPYF_cjs.AuthManager.hashPassword(password);
       const userId = crypto.randomUUID();
       const now = /* @__PURE__ */ new Date();
       await db.prepare(`
@@ -2442,7 +2401,7 @@ authRoutes.post(
         now.getTime(),
         now.getTime()
       ).run();
-      const token = await chunkWRMQX2TP_cjs.AuthManager.generateToken(userId, normalizedEmail, "viewer");
+      const token = await chunkX75QKPYF_cjs.AuthManager.generateToken(userId, normalizedEmail, "viewer");
       cookie.setCookie(c, "auth_token", token, {
         httpOnly: true,
         secure: true,
@@ -2495,11 +2454,11 @@ authRoutes.post("/login", async (c) => {
     if (!user) {
       return c.json({ error: "Invalid email or password" }, 401);
     }
-    const isValidPassword = await chunkWRMQX2TP_cjs.AuthManager.verifyPassword(password, user.password_hash);
+    const isValidPassword = await chunkX75QKPYF_cjs.AuthManager.verifyPassword(password, user.password_hash);
     if (!isValidPassword) {
       return c.json({ error: "Invalid email or password" }, 401);
     }
-    const token = await chunkWRMQX2TP_cjs.AuthManager.generateToken(user.id, user.email, user.role);
+    const token = await chunkX75QKPYF_cjs.AuthManager.generateToken(user.id, user.email, user.role);
     cookie.setCookie(c, "auth_token", token, {
       httpOnly: true,
       secure: true,
@@ -2548,7 +2507,7 @@ authRoutes.get("/logout", (c) => {
   });
   return c.redirect("/auth/login?message=You have been logged out successfully");
 });
-authRoutes.get("/me", chunkWRMQX2TP_cjs.requireAuth(), async (c) => {
+authRoutes.get("/me", chunkX75QKPYF_cjs.requireAuth(), async (c) => {
   try {
     const user = c.get("user");
     if (!user) {
@@ -2565,13 +2524,13 @@ authRoutes.get("/me", chunkWRMQX2TP_cjs.requireAuth(), async (c) => {
     return c.json({ error: "Failed to get user" }, 500);
   }
 });
-authRoutes.post("/refresh", chunkWRMQX2TP_cjs.requireAuth(), async (c) => {
+authRoutes.post("/refresh", chunkX75QKPYF_cjs.requireAuth(), async (c) => {
   try {
     const user = c.get("user");
     if (!user) {
       return c.json({ error: "Not authenticated" }, 401);
     }
-    const token = await chunkWRMQX2TP_cjs.AuthManager.generateToken(user.userId, user.email, user.role);
+    const token = await chunkX75QKPYF_cjs.AuthManager.generateToken(user.userId, user.email, user.role);
     cookie.setCookie(c, "auth_token", token, {
       httpOnly: true,
       secure: true,
@@ -2631,7 +2590,7 @@ authRoutes.post("/register/form", async (c) => {
         </div>
       `);
     }
-    const passwordHash = await chunkWRMQX2TP_cjs.AuthManager.hashPassword(password);
+    const passwordHash = await chunkX75QKPYF_cjs.AuthManager.hashPassword(password);
     const role = isFirstUser ? "admin" : "viewer";
     const userId = crypto.randomUUID();
     const now = /* @__PURE__ */ new Date();
@@ -2651,10 +2610,7 @@ authRoutes.post("/register/form", async (c) => {
       now.getTime(),
       now.getTime()
     ).run();
-    if (isFirstUser) {
-      setAdminExists();
-    }
-    const token = await chunkWRMQX2TP_cjs.AuthManager.generateToken(userId, normalizedEmail, role);
+    const token = await chunkX75QKPYF_cjs.AuthManager.generateToken(userId, normalizedEmail, role);
     cookie.setCookie(c, "auth_token", token, {
       httpOnly: true,
       secure: false,
@@ -2706,7 +2662,7 @@ authRoutes.post("/login/form", async (c) => {
         </div>
       `);
     }
-    const isValidPassword = await chunkWRMQX2TP_cjs.AuthManager.verifyPassword(password, user.password_hash);
+    const isValidPassword = await chunkX75QKPYF_cjs.AuthManager.verifyPassword(password, user.password_hash);
     if (!isValidPassword) {
       return c.html(html.html`
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
@@ -2714,7 +2670,7 @@ authRoutes.post("/login/form", async (c) => {
         </div>
       `);
     }
-    const token = await chunkWRMQX2TP_cjs.AuthManager.generateToken(user.id, user.email, user.role);
+    const token = await chunkX75QKPYF_cjs.AuthManager.generateToken(user.id, user.email, user.role);
     cookie.setCookie(c, "auth_token", token, {
       httpOnly: true,
       secure: false,
@@ -2773,9 +2729,8 @@ authRoutes.post("/seed-admin", async (c) => {
     `).run();
     const existingAdmin = await db.prepare("SELECT id FROM users WHERE email = ? OR username = ?").bind("admin@sonicjs.com", "admin").first();
     if (existingAdmin) {
-      const passwordHash2 = await chunkWRMQX2TP_cjs.AuthManager.hashPassword("sonicjs!");
+      const passwordHash2 = await chunkX75QKPYF_cjs.AuthManager.hashPassword("sonicjs!");
       await db.prepare("UPDATE users SET password_hash = ?, updated_at = ? WHERE id = ?").bind(passwordHash2, Date.now(), existingAdmin.id).run();
-      setAdminExists();
       return c.json({
         message: "Admin user already exists (password updated)",
         user: {
@@ -2786,7 +2741,7 @@ authRoutes.post("/seed-admin", async (c) => {
         }
       });
     }
-    const passwordHash = await chunkWRMQX2TP_cjs.AuthManager.hashPassword("sonicjs!");
+    const passwordHash = await chunkX75QKPYF_cjs.AuthManager.hashPassword("sonicjs!");
     const userId = "admin-user-id";
     const now = Date.now();
     const adminEmail = "admin@sonicjs.com".toLowerCase();
@@ -2806,7 +2761,6 @@ authRoutes.post("/seed-admin", async (c) => {
       now,
       now
     ).run();
-    setAdminExists();
     return c.json({
       message: "Admin user created successfully",
       user: {
@@ -3007,7 +2961,7 @@ authRoutes.post("/accept-invitation", async (c) => {
     if (existingUsername) {
       return c.json({ error: "Username is already taken" }, 400);
     }
-    const passwordHash = await chunkWRMQX2TP_cjs.AuthManager.hashPassword(password);
+    const passwordHash = await chunkX75QKPYF_cjs.AuthManager.hashPassword(password);
     const updateStmt = db.prepare(`
       UPDATE users SET 
         username = ?,
@@ -3026,7 +2980,7 @@ authRoutes.post("/accept-invitation", async (c) => {
       Date.now(),
       invitedUser.id
     ).run();
-    const authToken = await chunkWRMQX2TP_cjs.AuthManager.generateToken(invitedUser.id, invitedUser.email, invitedUser.role);
+    const authToken = await chunkX75QKPYF_cjs.AuthManager.generateToken(invitedUser.id, invitedUser.email, invitedUser.role);
     cookie.setCookie(c, "auth_token", authToken, {
       httpOnly: true,
       secure: true,
@@ -3256,7 +3210,7 @@ authRoutes.post("/reset-password", async (c) => {
     if (Date.now() > user.password_reset_expires) {
       return c.json({ error: "Reset token has expired" }, 400);
     }
-    const newPasswordHash = await chunkWRMQX2TP_cjs.AuthManager.hashPassword(password);
+    const newPasswordHash = await chunkX75QKPYF_cjs.AuthManager.hashPassword(password);
     try {
       const historyStmt = db.prepare(`
         INSERT INTO password_history (id, user_id, password_hash, created_at)
@@ -3514,7 +3468,7 @@ app.post("/test-cleanup/content", async (c) => {
 var test_cleanup_default = app;
 
 // src/templates/pages/admin-content-form.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 
 // src/templates/components/drag-sortable.template.ts
 function getDragSortableScript() {
@@ -5208,7 +5162,7 @@ function getQuillInitScript() {
             formats: [
               'header', 'bold', 'italic', 'underline', 'strike',
               'color', 'background', 'align',
-              'list', 'bullet', 'indent',
+              'list', 'indent',
               'blockquote', 'code-block',
               'link', 'image', 'video'
             ]
@@ -5656,8 +5610,8 @@ function renderContentFormPage(data) {
         <!-- Form Content -->
         <div class="px-6 py-6">
           <div id="form-messages">
-            ${data.error ? chunkAZLU3ROK_cjs.renderAlert({ type: "error", message: data.error, dismissible: true }) : ""}
-            ${data.success ? chunkAZLU3ROK_cjs.renderAlert({ type: "success", message: data.success, dismissible: true }) : ""}
+            ${data.error ? chunkBZC4FYW7_cjs.renderAlert({ type: "error", message: data.error, dismissible: true }) : ""}
+            ${data.success ? chunkBZC4FYW7_cjs.renderAlert({ type: "success", message: data.success, dismissible: true }) : ""}
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -5892,7 +5846,7 @@ function renderContentFormPage(data) {
     </div>
 
     <!-- Confirmation Dialogs -->
-    ${chunkAZLU3ROK_cjs.renderConfirmationDialog({
+    ${chunkBZC4FYW7_cjs.renderConfirmationDialog({
     id: "duplicate-content-confirm",
     title: "Duplicate Content",
     message: "Create a copy of this content?",
@@ -5903,7 +5857,7 @@ function renderContentFormPage(data) {
     onConfirm: "performDuplicateContent()"
   })}
 
-    ${chunkAZLU3ROK_cjs.renderConfirmationDialog({
+    ${chunkBZC4FYW7_cjs.renderConfirmationDialog({
     id: "delete-content-confirm",
     title: "Delete Content",
     message: "Are you sure you want to delete this content? This action cannot be undone.",
@@ -5914,7 +5868,7 @@ function renderContentFormPage(data) {
     onConfirm: `performDeleteContent('${data.id}')`
   })}
 
-    ${chunkAZLU3ROK_cjs.getConfirmationDialogScript()}
+    ${chunkBZC4FYW7_cjs.getConfirmationDialogScript()}
 
     ${data.tinymceEnabled ? getTinyMCEScript(data.tinymceSettings?.apiKey) : "<!-- TinyMCE plugin not active -->"}
 
@@ -6519,11 +6473,11 @@ function renderContentFormPage(data) {
     content: pageContent,
     version: data.version
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 
 // src/templates/pages/admin-content-list.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 function renderContentListPage(data) {
   const urlParams = new URLSearchParams();
   if (data.modelName && data.modelName !== "all") urlParams.set("model", data.modelName);
@@ -6531,7 +6485,7 @@ function renderContentListPage(data) {
   if (data.search) urlParams.set("search", data.search);
   if (data.page && data.page !== 1) urlParams.set("page", data.page.toString());
   const currentParams = urlParams.toString();
-  const hasActiveFilters = data.modelName !== "all" || data.status !== "all" || !!data.search;
+  data.modelName !== "all" || data.status !== "all" || !!data.search;
   const filterBarData = {
     filters: [
       {
@@ -6561,6 +6515,11 @@ function renderContentListPage(data) {
       }
     ],
     actions: [
+      {
+        label: "Advanced Search",
+        className: "btn-primary",
+        onclick: "openAdvancedSearch()"
+      },
       {
         label: "Refresh",
         className: "btn-secondary",
@@ -6712,12 +6671,57 @@ function renderContentListPage(data) {
         <div class="relative bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-sm ring-1 ring-zinc-950/5 dark:ring-white/10 rounded-xl">
           <div class="px-6 py-5">
             <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-4">
-                <!-- Search Input -->
+              <div class="flex items-center space-x-4 flex-1">
+                <!-- Model Filter -->
                 <div>
+                  <label class="block text-sm font-medium text-zinc-950 dark:text-white mb-2">Model</label>
+                  <div class="grid grid-cols-1">
+                    <select
+                      name="model"
+                      onchange="updateContentFilters('model', this.value)"
+                      class="col-start-1 row-start-1 w-full appearance-none rounded-lg bg-white/5 dark:bg-white/5 py-2 pl-3 pr-8 text-sm text-zinc-950 dark:text-white outline outline-1 -outline-offset-1 outline-cyan-500/30 dark:outline-cyan-400/30 *:bg-white dark:*:bg-zinc-800 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-500 dark:focus-visible:outline-cyan-400 min-w-40"
+                    >
+                      <option value="all" ${data.modelName === "all" ? "selected" : ""}>All Models</option>
+                      ${data.models.map((model) => `
+                        <option value="${model.name}" ${data.modelName === model.name ? "selected" : ""}>
+                          ${model.displayName}
+                        </option>
+                      `).join("")}
+                    </select>
+                    <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-cyan-600 dark:text-cyan-400 sm:size-4">
+                      <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Status Filter -->
+                <div>
+                  <label class="block text-sm font-medium text-zinc-950 dark:text-white mb-2">Status</label>
+                  <div class="grid grid-cols-1">
+                    <select
+                      name="status"
+                      onchange="updateContentFilters('status', this.value)"
+                      class="col-start-1 row-start-1 w-full appearance-none rounded-lg bg-white/5 dark:bg-white/5 py-2 pl-3 pr-8 text-sm text-zinc-950 dark:text-white outline outline-1 -outline-offset-1 outline-cyan-500/30 dark:outline-cyan-400/30 *:bg-white dark:*:bg-zinc-800 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-500 dark:focus-visible:outline-cyan-400 min-w-40"
+                    >
+                      <option value="all" ${data.status === "all" ? "selected" : ""}>All Status</option>
+                      <option value="draft" ${data.status === "draft" ? "selected" : ""}>Draft</option>
+                      <option value="review" ${data.status === "review" ? "selected" : ""}>Under Review</option>
+                      <option value="scheduled" ${data.status === "scheduled" ? "selected" : ""}>Scheduled</option>
+                      <option value="published" ${data.status === "published" ? "selected" : ""}>Published</option>
+                      <option value="archived" ${data.status === "archived" ? "selected" : ""}>Archived</option>
+                      <option value="deleted" ${data.status === "deleted" ? "selected" : ""}>Deleted</option>
+                    </select>
+                    <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-cyan-600 dark:text-cyan-400 sm:size-4">
+                      <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Search Input -->
+                <div class="flex-1 max-w-md">
                   <label class="block text-sm font-medium text-zinc-950 dark:text-white mb-2">Search</label>
                   <form onsubmit="performContentSearch(event)" class="flex items-center space-x-2">
-                    <div class="relative group">
+                    <div class="relative group flex-1">
                       <input
                         type="text"
                         name="search"
@@ -6725,7 +6729,7 @@ function renderContentListPage(data) {
                         value="${data.search || ""}"
                         oninput="toggleContentClearButton()"
                         placeholder="Search content..."
-                        class="rounded-full bg-white/90 dark:bg-zinc-800/90 backdrop-blur-sm px-4 py-2.5 pl-11 pr-10 text-sm w-72 text-zinc-950 dark:text-white border-2 border-cyan-200/50 dark:border-cyan-700/50 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-cyan-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-zinc-800 focus:shadow-lg focus:shadow-cyan-500/20 dark:focus:shadow-cyan-400/20 transition-all duration-300"
+                        class="w-full rounded-full bg-white/90 dark:bg-zinc-800/90 backdrop-blur-sm px-4 py-2.5 pl-11 pr-10 text-sm text-zinc-950 dark:text-white border-2 border-cyan-200/50 dark:border-cyan-700/50 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-cyan-500 dark:focus:border-cyan-400 focus:bg-white dark:focus:bg-zinc-800 focus:shadow-lg focus:shadow-cyan-500/20 dark:focus:shadow-cyan-400/20 transition-all duration-300"
                       >
                       <div class="absolute left-3.5 top-2.5 flex items-center justify-center w-5 h-5 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 dark:from-cyan-300 dark:to-blue-400 opacity-90 group-focus-within:opacity-100 transition-opacity">
                         <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
@@ -6797,57 +6801,6 @@ function renderContentListPage(data) {
                     }
                   </script>
                 </div>
-
-                ${filterBarData.filters.map((filter) => {
-    const selectedOption = filter.options.find((opt) => opt.selected);
-    const selectedColor = selectedOption?.color || "cyan";
-    const colorMap = {
-      "cyan": "bg-cyan-400 dark:bg-cyan-400",
-      "lime": "bg-lime-400 dark:bg-lime-400",
-      "pink": "bg-pink-400 dark:bg-pink-400",
-      "purple": "bg-purple-400 dark:bg-purple-400",
-      "amber": "bg-amber-400 dark:bg-amber-400",
-      "zinc": "bg-zinc-400 dark:bg-zinc-400"
-    };
-    return `
-                  <div>
-                    <label class="block text-sm/6 font-medium text-zinc-950 dark:text-white">${filter.label}</label>
-                    <div class="mt-2 grid grid-cols-1">
-                      <div class="col-start-1 row-start-1 flex items-center gap-3 pl-3 pr-8 pointer-events-none">
-                        ${filter.name === "status" ? `<span class="inline-block size-2 shrink-0 rounded-full border border-transparent ${colorMap[selectedColor]}"></span>` : ""}
-                      </div>
-                      <select
-                        name="${filter.name}"
-                        onchange="updateContentFilters('${filter.name}', this.value)"
-                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 dark:bg-white/5 py-1.5 ${filter.name === "status" ? "pl-8" : "pl-3"} pr-8 text-base text-zinc-950 dark:text-white outline outline-1 -outline-offset-1 outline-cyan-500/30 dark:outline-cyan-400/30 *:bg-white dark:*:bg-zinc-800 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-500 dark:focus-visible:outline-cyan-400 sm:text-sm/6 min-w-48"
-                      >
-                        ${filter.options.map((opt) => `
-                          <option value="${opt.value}" ${opt.selected ? "selected" : ""}>${opt.label}</option>
-                        `).join("")}
-                      </select>
-                      <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-cyan-600 dark:text-cyan-400 sm:size-4">
-                        <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                `;
-  }).join("")}
-
-                <!-- Clear Filters Button -->
-                ${hasActiveFilters ? `
-                  <div>
-                    <label class="block text-sm/6 font-medium text-zinc-950 dark:text-white mb-2">&nbsp;</label>
-                    <button
-                      onclick="clearAllFilters()"
-                      class="inline-flex items-center gap-x-1.5 px-3 py-2 bg-pink-50 dark:bg-pink-500/10 text-pink-700 dark:text-pink-300 text-sm font-medium rounded-md ring-1 ring-inset ring-pink-600/20 dark:ring-pink-500/20 hover:bg-pink-100 dark:hover:bg-pink-500/20 transition-colors"
-                    >
-                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                      </svg>
-                      Clear Filters
-                    </button>
-                  </div>
-                ` : ""}
               </div>
               <div class="flex items-center gap-x-3">
                 <span class="text-sm/6 font-medium text-zinc-700 dark:text-zinc-300 px-3 py-1.5 rounded-full bg-white/60 dark:bg-zinc-800/60 backdrop-blur-sm">${data.totalItems} ${data.totalItems === 1 ? "item" : "items"}</span>
@@ -6928,8 +6881,8 @@ function renderContentListPage(data) {
       
       <!-- Content List -->
       <div id="content-list">
-        ${chunkAZLU3ROK_cjs.renderTable(tableData)}
-        ${chunkAZLU3ROK_cjs.renderPagination(paginationData)}
+        ${chunkBZC4FYW7_cjs.renderTable(tableData)}
+        ${chunkBZC4FYW7_cjs.renderPagination(paginationData)}
       </div>
       
     </div>
@@ -7138,7 +7091,7 @@ function renderContentListPage(data) {
     </script>
 
     <!-- Confirmation Dialog for Bulk Actions -->
-    ${chunkAZLU3ROK_cjs.renderConfirmationDialog({
+    ${chunkBZC4FYW7_cjs.renderConfirmationDialog({
     id: "bulk-action-confirm",
     title: "Confirm Bulk Action",
     message: "Are you sure you want to perform this action? This operation will affect multiple items.",
@@ -7150,7 +7103,293 @@ function renderContentListPage(data) {
   })}
 
     <!-- Confirmation Dialog Script -->
-    ${chunkAZLU3ROK_cjs.getConfirmationDialogScript()}
+    ${chunkBZC4FYW7_cjs.getConfirmationDialogScript()}
+
+    <!-- Advanced Search Modal -->
+    <div id="advancedSearchModal" class="hidden fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="closeAdvancedSearch()"></div>
+
+        <!-- Modal panel -->
+        <div class="inline-block align-bottom bg-white dark:bg-zinc-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+          <div class="bg-white dark:bg-zinc-900 px-4 pt-5 pb-4 sm:p-6">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-zinc-950 dark:text-white" id="modal-title">
+                \u{1F50D} Advanced Search
+              </h3>
+              <button onclick="closeAdvancedSearch()" class="text-zinc-400 hover:text-zinc-500 dark:hover:text-zinc-300">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Search Form -->
+            <form id="advancedSearchForm" class="space-y-4">
+              <!-- Search Input -->
+              <div>
+                <label class="block text-sm font-medium text-zinc-950 dark:text-white mb-2">Search Query</label>
+                <div class="relative">
+                  <input
+                    type="text"
+                    id="searchQuery"
+                    name="query"
+                    placeholder="Enter your search query..."
+                    class="w-full rounded-lg bg-white dark:bg-white/5 px-4 py-3 text-sm text-zinc-950 dark:text-white ring-1 ring-inset ring-zinc-950/10 dark:ring-white/10 focus:ring-2 focus:ring-indigo-500"
+                    autocomplete="off"
+                  />
+                  <div id="searchSuggestions" class="hidden absolute z-10 w-full mt-1 bg-white dark:bg-zinc-800 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 max-h-60 overflow-y-auto"></div>
+                </div>
+              </div>
+
+              <!-- Mode Toggle -->
+              <div>
+                <label class="block text-sm font-medium text-zinc-950 dark:text-white mb-2">Search Mode</label>
+                <div class="flex gap-4">
+                  <label class="flex items-center">
+                    <input type="radio" name="mode" value="ai" checked class="mr-2">
+                    <span class="text-sm text-zinc-950 dark:text-white">\u{1F916} AI Search (Semantic)</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="radio" name="mode" value="keyword" class="mr-2">
+                    <span class="text-sm text-zinc-950 dark:text-white">\u{1F524} Keyword Search</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Filters -->
+              <div class="border-t border-zinc-200 dark:border-zinc-800 pt-4">
+                <h4 class="text-sm font-semibold text-zinc-950 dark:text-white mb-3">Filters</h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <!-- Collection Filter -->
+                  <div>
+                    <label class="block text-sm font-medium text-zinc-950 dark:text-white mb-2">Collections</label>
+                    <select
+                      id="filterCollections"
+                      name="collections"
+                      multiple
+                      class="w-full rounded-lg bg-white dark:bg-white/5 px-3 py-2 text-sm text-zinc-950 dark:text-white ring-1 ring-inset ring-zinc-950/10 dark:ring-white/10"
+                      size="4"
+                    >
+                      <option value="">All Collections</option>
+                      ${data.models.map(
+    (model) => `
+                          <option value="${model.name}">${model.displayName}</option>
+                        `
+  ).join("")}
+                    </select>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Hold Ctrl/Cmd to select multiple</p>
+                  </div>
+
+                  <!-- Status Filter -->
+                  <div>
+                    <label class="block text-sm font-medium text-zinc-950 dark:text-white mb-2">Status</label>
+                    <select
+                      id="filterStatus"
+                      name="status"
+                      multiple
+                      class="w-full rounded-lg bg-white dark:bg-white/5 px-3 py-2 text-sm text-zinc-950 dark:text-white ring-1 ring-inset ring-zinc-950/10 dark:ring-white/10"
+                      size="4"
+                    >
+                      <option value="published">Published</option>
+                      <option value="draft">Draft</option>
+                      <option value="review">Under Review</option>
+                      <option value="scheduled">Scheduled</option>
+                      <option value="archived">Archived</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="flex items-center justify-end gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                <button
+                  type="button"
+                  onclick="closeAdvancedSearch()"
+                  class="inline-flex items-center justify-center rounded-lg bg-white dark:bg-zinc-800 px-4 py-2 text-sm font-semibold text-zinc-950 dark:text-white ring-1 ring-inset ring-zinc-950/10 dark:ring-white/10 hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="inline-flex items-center justify-center rounded-lg bg-indigo-600 text-white px-6 py-2.5 text-sm font-semibold hover:bg-indigo-500 shadow-sm"
+                >
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Results Area -->
+          <div id="searchResults" class="hidden px-4 pb-4 sm:px-6">
+            <div class="border-t border-zinc-200 dark:border-zinc-800 pt-4">
+              <div id="searchResultsContent" class="space-y-3"></div>
+              <div id="searchResultsPagination" class="mt-4 flex items-center justify-between"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Open modal
+      function openAdvancedSearch() {
+        document.getElementById('advancedSearchModal').classList.remove('hidden');
+        document.getElementById('searchQuery').focus();
+      }
+
+      // Close modal
+      function closeAdvancedSearch() {
+        document.getElementById('advancedSearchModal').classList.add('hidden');
+        document.getElementById('searchResults').classList.add('hidden');
+      }
+
+      // Autocomplete
+      let autocompleteTimeout;
+      const searchQueryInput = document.getElementById('searchQuery');
+      if (searchQueryInput) {
+        searchQueryInput.addEventListener('input', (e) => {
+          const query = e.target.value.trim();
+          const suggestionsDiv = document.getElementById('searchSuggestions');
+          
+          clearTimeout(autocompleteTimeout);
+          
+          if (query.length < 2) {
+            suggestionsDiv.classList.add('hidden');
+            return;
+          }
+
+          autocompleteTimeout = setTimeout(async () => {
+            try {
+              const res = await fetch(\`/api/search/suggest?q=\${encodeURIComponent(query)}\`);
+              const { data } = await res.json();
+              
+              if (data && data.length > 0) {
+                suggestionsDiv.innerHTML = data.map(s => \`
+                  <div class="px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 cursor-pointer" onclick="selectSuggestion('\${s.replace(/'/g, "\\'")}')">\${s}</div>
+                \`).join('');
+                suggestionsDiv.classList.remove('hidden');
+              } else {
+                suggestionsDiv.classList.add('hidden');
+              }
+            } catch (error) {
+              console.error('Autocomplete error:', error);
+            }
+          }, 300);
+        });
+      }
+
+      function selectSuggestion(suggestion) {
+        document.getElementById('searchQuery').value = suggestion;
+        document.getElementById('searchSuggestions').classList.add('hidden');
+      }
+
+      // Hide suggestions when clicking outside
+      document.addEventListener('click', (e) => {
+        const suggestionsDiv = document.getElementById('searchSuggestions');
+        if (!e.target.closest('#searchQuery') && !e.target.closest('#searchSuggestions')) {
+          suggestionsDiv.classList.add('hidden');
+        }
+      });
+
+      // Form submission
+      const advancedSearchForm = document.getElementById('advancedSearchForm');
+      if (advancedSearchForm) {
+        advancedSearchForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const formData = new FormData(e.target);
+          const query = formData.get('query');
+          const mode = formData.get('mode') || 'ai';
+          
+          // Build filters
+          const filters = {};
+          
+          const collections = Array.from(formData.getAll('collections')).filter(c => c !== '');
+          if (collections.length > 0) {
+            // Need to convert collection names to IDs - for now, pass names
+            filters.collections = collections;
+          }
+          
+          const status = Array.from(formData.getAll('status'));
+          if (status.length > 0) {
+            filters.status = status;
+          }
+          
+          const dateStart = formData.get('date_start');
+          const dateEnd = formData.get('date_end');
+          if (dateStart || dateEnd) {
+            filters.dateRange = {
+              start: dateStart ? new Date(dateStart) : null,
+              end: dateEnd ? new Date(dateEnd) : null,
+              field: 'created_at'
+            };
+          }
+
+          // Execute search
+          try {
+            const res = await fetch('/api/search', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({
+                query,
+                mode,
+                filters,
+                limit: 20
+              })
+            });
+
+            const { data } = await res.json();
+            
+            if (data && data.results) {
+              displaySearchResults(data);
+            }
+          } catch (error) {
+            console.error('Search error:', error);
+            alert('Search failed. Please try again.');
+          }
+        });
+      }
+
+      function displaySearchResults(searchData) {
+        const resultsDiv = document.getElementById('searchResultsContent');
+        const resultsSection = document.getElementById('searchResults');
+        
+        if (searchData.results.length === 0) {
+          resultsDiv.innerHTML = '<p class="text-sm text-zinc-500 dark:text-zinc-400">No results found.</p>';
+        } else {
+          resultsDiv.innerHTML = searchData.results.map(result => \`
+            <div class="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800">
+              <div class="flex items-start justify-between">
+                <div class="flex-1">
+                  <h4 class="text-sm font-semibold text-zinc-950 dark:text-white mb-1">
+                    <a href="/admin/content/\${result.id}/edit" class="hover:text-indigo-600 dark:hover:text-indigo-400">\${result.title || 'Untitled'}</a>
+                  </h4>
+                  <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-2">
+                    \${result.collection_name} \u2022 \${new Date(result.created_at).toLocaleDateString()}
+                    \${result.relevance_score ? \` \u2022 Relevance: \${(result.relevance_score * 100).toFixed(0)}%\` : ''}
+                  </p>
+                  \${result.snippet ? \`<p class="text-sm text-zinc-600 dark:text-zinc-400">\${result.snippet}</p>\` : ''}
+                </div>
+                <div class="ml-4">
+                  <span class="px-2 py-1 text-xs rounded-full \${result.status === 'published' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300'}">\${result.status}</span>
+                </div>
+              </div>
+            </div>
+          \`).join('');
+        }
+        
+        resultsSection.classList.remove('hidden');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      // Make functions globally available
+      window.openAdvancedSearch = openAdvancedSearch;
+      window.closeAdvancedSearch = closeAdvancedSearch;
+    </script>
   `;
   const layoutData = {
     title: "Content Management",
@@ -7160,7 +7399,7 @@ function renderContentListPage(data) {
     version: data.version,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 
 // src/templates/components/version-history.template.ts
@@ -7470,7 +7709,7 @@ function extractFieldData(fields, formData, options = {}) {
   }
   return { data, errors };
 }
-adminContentRoutes.use("*", chunkWRMQX2TP_cjs.requireAuth());
+adminContentRoutes.use("*", chunkX75QKPYF_cjs.requireAuth());
 async function getCollectionFields(db, collectionId) {
   const cache = chunk7FOAMNTI_cjs.getCacheService(chunk7FOAMNTI_cjs.CACHE_CONFIGS.collection);
   return cache.getOrSet(
@@ -7752,21 +7991,21 @@ adminContentRoutes.get("/new", async (c) => {
     const tinymceEnabled = await isPluginActive2(db, "tinymce-plugin");
     let tinymceSettings;
     if (tinymceEnabled) {
-      const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+      const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
       const tinymcePlugin2 = await pluginService.getPlugin("tinymce-plugin");
       tinymceSettings = tinymcePlugin2?.settings;
     }
     const quillEnabled = await isPluginActive2(db, "quill-editor");
     let quillSettings;
     if (quillEnabled) {
-      const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+      const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
       const quillPlugin = await pluginService.getPlugin("quill-editor");
       quillSettings = quillPlugin?.settings;
     }
     const mdxeditorEnabled = await isPluginActive2(db, "easy-mdx");
     let mdxeditorSettings;
     if (mdxeditorEnabled) {
-      const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+      const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
       const mdxeditorPlugin = await pluginService.getPlugin("easy-mdx");
       mdxeditorSettings = mdxeditorPlugin?.settings;
     }
@@ -7857,21 +8096,21 @@ adminContentRoutes.get("/:id/edit", async (c) => {
     const tinymceEnabled = await isPluginActive2(db, "tinymce-plugin");
     let tinymceSettings;
     if (tinymceEnabled) {
-      const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+      const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
       const tinymcePlugin2 = await pluginService.getPlugin("tinymce-plugin");
       tinymceSettings = tinymcePlugin2?.settings;
     }
     const quillEnabled = await isPluginActive2(db, "quill-editor");
     let quillSettings;
     if (quillEnabled) {
-      const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+      const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
       const quillPlugin = await pluginService.getPlugin("quill-editor");
       quillSettings = quillPlugin?.settings;
     }
     const mdxeditorEnabled = await isPluginActive2(db, "easy-mdx");
     let mdxeditorSettings;
     if (mdxeditorEnabled) {
-      const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+      const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
       const mdxeditorPlugin = await pluginService.getPlugin("easy-mdx");
       mdxeditorSettings = mdxeditorPlugin?.settings;
     }
@@ -8601,7 +8840,7 @@ ${JSON.stringify(data, null, 2)}
 var admin_content_default = adminContentRoutes;
 
 // src/templates/pages/admin-profile.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 function renderAvatarImage(avatarUrl, firstName, lastName) {
   return `<div id="avatar-image-container" class="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden bg-gradient-to-br from-cyan-400 to-purple-400 flex items-center justify-center ring-4 ring-zinc-950/5 dark:ring-white/10">
     ${avatarUrl ? `<img src="${avatarUrl}" alt="Profile picture" class="w-full h-full object-cover">` : `<span class="text-2xl font-bold text-white">${firstName.charAt(0)}${lastName.charAt(0)}</span>`}
@@ -8621,8 +8860,8 @@ function renderProfilePage(data) {
       </div>
 
       <!-- Alert Messages -->
-      ${data.error ? chunkAZLU3ROK_cjs.renderAlert({ type: "error", message: data.error, dismissible: true }) : ""}
-      ${data.success ? chunkAZLU3ROK_cjs.renderAlert({ type: "success", message: data.success, dismissible: true }) : ""}
+      ${data.error ? chunkBZC4FYW7_cjs.renderAlert({ type: "error", message: data.error, dismissible: true }) : ""}
+      ${data.success ? chunkBZC4FYW7_cjs.renderAlert({ type: "success", message: data.success, dismissible: true }) : ""}
 
       <!-- Profile Form -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -9009,7 +9248,7 @@ function renderProfilePage(data) {
     version: data.version,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 
 // src/templates/components/alert.template.ts
@@ -9292,7 +9531,7 @@ function renderActivityLogsPage(data) {
     user: data.user,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayout(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayout(layoutData);
 }
 function getActionBadgeClass(action) {
   if (action.includes("login") || action.includes("logout")) {
@@ -9312,7 +9551,7 @@ function formatAction(action) {
 }
 
 // src/templates/pages/admin-user-edit.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 
 // src/templates/components/confirmation-dialog.template.ts
 function renderConfirmationDialog2(options) {
@@ -9433,8 +9672,8 @@ function renderUserEditPage(data) {
 
       <!-- Alert Messages -->
       <div id="form-messages">
-        ${data.error ? chunkAZLU3ROK_cjs.renderAlert({ type: "error", message: data.error, dismissible: true }) : ""}
-        ${data.success ? chunkAZLU3ROK_cjs.renderAlert({ type: "success", message: data.success, dismissible: true }) : ""}
+        ${data.error ? chunkBZC4FYW7_cjs.renderAlert({ type: "error", message: data.error, dismissible: true }) : ""}
+        ${data.success ? chunkBZC4FYW7_cjs.renderAlert({ type: "success", message: data.success, dismissible: true }) : ""}
       </div>
 
       <!-- User Edit Form -->
@@ -9800,11 +10039,11 @@ function renderUserEditPage(data) {
     user: data.user,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 
 // src/templates/pages/admin-user-new.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 function renderUserNewPage(data) {
   const pageContent = `
     <div>
@@ -9843,8 +10082,8 @@ function renderUserNewPage(data) {
 
       <!-- Alert Messages -->
       <div id="form-messages">
-        ${data.error ? chunkAZLU3ROK_cjs.renderAlert({ type: "error", message: data.error, dismissible: true }) : ""}
-        ${data.success ? chunkAZLU3ROK_cjs.renderAlert({ type: "success", message: data.success, dismissible: true }) : ""}
+        ${data.error ? chunkBZC4FYW7_cjs.renderAlert({ type: "error", message: data.error, dismissible: true }) : ""}
+        ${data.success ? chunkBZC4FYW7_cjs.renderAlert({ type: "success", message: data.success, dismissible: true }) : ""}
       </div>
 
       <!-- User New Form -->
@@ -10088,11 +10327,11 @@ function renderUserNewPage(data) {
     user: data.user,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 
 // src/templates/pages/admin-users-list.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 function renderUsersListPage(data) {
   const columns = [
     {
@@ -10243,8 +10482,8 @@ function renderUsersListPage(data) {
       </div>
 
       <!-- Alert Messages -->
-      ${data.error ? chunkAZLU3ROK_cjs.renderAlert({ type: "error", message: data.error, dismissible: true }) : ""}
-      ${data.success ? chunkAZLU3ROK_cjs.renderAlert({ type: "success", message: data.success, dismissible: true }) : ""}
+      ${data.error ? chunkBZC4FYW7_cjs.renderAlert({ type: "error", message: data.error, dismissible: true }) : ""}
+      ${data.success ? chunkBZC4FYW7_cjs.renderAlert({ type: "success", message: data.success, dismissible: true }) : ""}
 
       <!-- Stats -->
       <div class="mb-6">
@@ -10421,10 +10660,10 @@ function renderUsersListPage(data) {
       </div>
 
       <!-- Users Table -->
-      ${chunkAZLU3ROK_cjs.renderTable(tableData)}
+      ${chunkBZC4FYW7_cjs.renderTable(tableData)}
 
       <!-- Pagination -->
-      ${data.pagination ? chunkAZLU3ROK_cjs.renderPagination(data.pagination) : ""}
+      ${data.pagination ? chunkBZC4FYW7_cjs.renderPagination(data.pagination) : ""}
     </div>
 
     <script>
@@ -10495,12 +10734,12 @@ function renderUsersListPage(data) {
     version: data.version,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 
 // src/routes/admin-users.ts
 var userRoutes = new hono.Hono();
-userRoutes.use("*", chunkWRMQX2TP_cjs.requireAuth());
+userRoutes.use("*", chunkX75QKPYF_cjs.requireAuth());
 userRoutes.get("/", (c) => {
   return c.redirect("/admin/dashboard");
 });
@@ -10655,7 +10894,7 @@ userRoutes.put("/profile", async (c) => {
       Date.now(),
       user.userId
     ).run();
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "profile.update",
@@ -10718,7 +10957,7 @@ userRoutes.post("/profile/avatar", async (c) => {
       SELECT first_name, last_name FROM users WHERE id = ?
     `);
     const userData = await userStmt.bind(user.userId).first();
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "profile.avatar_update",
@@ -10789,7 +11028,7 @@ userRoutes.post("/profile/password", async (c) => {
         dismissible: true
       }));
     }
-    const validPassword = await chunkWRMQX2TP_cjs.AuthManager.verifyPassword(currentPassword, userData.password_hash);
+    const validPassword = await chunkX75QKPYF_cjs.AuthManager.verifyPassword(currentPassword, userData.password_hash);
     if (!validPassword) {
       return c.html(renderAlert2({
         type: "error",
@@ -10797,7 +11036,7 @@ userRoutes.post("/profile/password", async (c) => {
         dismissible: true
       }));
     }
-    const newPasswordHash = await chunkWRMQX2TP_cjs.AuthManager.hashPassword(newPassword);
+    const newPasswordHash = await chunkX75QKPYF_cjs.AuthManager.hashPassword(newPassword);
     const historyStmt = db.prepare(`
       INSERT INTO password_history (id, user_id, password_hash, created_at)
       VALUES (?, ?, ?, ?)
@@ -10813,7 +11052,7 @@ userRoutes.post("/profile/password", async (c) => {
       WHERE id = ?
     `);
     await updateStmt.bind(newPasswordHash, Date.now(), user.userId).run();
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "profile.password_change",
@@ -10880,7 +11119,7 @@ userRoutes.get("/users", async (c) => {
     `);
     const countResult = await countStmt.bind(...params).first();
     const totalUsers = countResult?.total || 0;
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "users.list_view",
@@ -11034,7 +11273,7 @@ userRoutes.post("/users/new", async (c) => {
         dismissible: true
       }));
     }
-    const passwordHash = await chunkWRMQX2TP_cjs.AuthManager.hashPassword(password);
+    const passwordHash = await chunkX75QKPYF_cjs.AuthManager.hashPassword(password);
     const userId = crypto.randomUUID();
     const createStmt = db.prepare(`
       INSERT INTO users (
@@ -11057,7 +11296,7 @@ userRoutes.post("/users/new", async (c) => {
       Date.now(),
       Date.now()
     ).run();
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "user!.create",
@@ -11095,7 +11334,7 @@ userRoutes.get("/users/:id", async (c) => {
     if (!userRecord) {
       return c.json({ error: "User not found" }, 404);
     }
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "user!.view",
@@ -11320,7 +11559,7 @@ userRoutes.put("/users/:id", async (c) => {
         ).run();
       }
     }
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "user.update",
@@ -11365,7 +11604,7 @@ userRoutes.post("/users/:id/toggle", async (c) => {
       UPDATE users SET is_active = ?, updated_at = ? WHERE id = ?
     `);
     await toggleStmt.bind(active ? 1 : 0, Date.now(), userId).run();
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       active ? "user.activate" : "user.deactivate",
@@ -11406,7 +11645,7 @@ userRoutes.delete("/users/:id", async (c) => {
         DELETE FROM users WHERE id = ?
       `);
       await deleteStmt.bind(userId).run();
-      await chunkWRMQX2TP_cjs.logActivity(
+      await chunkX75QKPYF_cjs.logActivity(
         db,
         user.userId,
         "user!.hard_delete",
@@ -11425,7 +11664,7 @@ userRoutes.delete("/users/:id", async (c) => {
         UPDATE users SET is_active = 0, updated_at = ? WHERE id = ?
       `);
       await deleteStmt.bind(Date.now(), userId).run();
-      await chunkWRMQX2TP_cjs.logActivity(
+      await chunkX75QKPYF_cjs.logActivity(
         db,
         user.userId,
         "user!.soft_delete",
@@ -11491,7 +11730,7 @@ userRoutes.post("/invite-user", async (c) => {
       Date.now(),
       Date.now()
     ).run();
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "user!.invite_sent",
@@ -11548,7 +11787,7 @@ userRoutes.post("/resend-invitation/:id", async (c) => {
       Date.now(),
       userId
     ).run();
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "user!.invitation_resent",
@@ -11584,7 +11823,7 @@ userRoutes.delete("/cancel-invitation/:id", async (c) => {
     }
     const deleteStmt = db.prepare(`DELETE FROM users WHERE id = ?`);
     await deleteStmt.bind(userId).run();
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "user!.invitation_cancelled",
@@ -11667,7 +11906,7 @@ userRoutes.get("/activity-logs", async (c) => {
       ...log,
       details: log.details ? JSON.parse(log.details) : null
     }));
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "activity.logs_viewed",
@@ -11774,7 +12013,7 @@ userRoutes.get("/activity-logs/export", async (c) => {
       csvRows.push(row.join(","));
     }
     const csvContent = csvRows.join("\n");
-    await chunkWRMQX2TP_cjs.logActivity(
+    await chunkX75QKPYF_cjs.logActivity(
       db,
       user.userId,
       "activity.logs_exported",
@@ -11992,7 +12231,7 @@ function getFileIcon(mimeType) {
 }
 
 // src/templates/pages/admin-media-library.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 function renderMediaLibraryPage(data) {
   const pageContent = `
     <div>
@@ -12927,7 +13166,7 @@ function renderMediaLibraryPage(data) {
     version: data.version,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 
 // src/templates/components/media-file-details.template.ts
@@ -13113,7 +13352,7 @@ var fileValidationSchema2 = zod.z.object({
   // 50MB max
 });
 var adminMediaRoutes = new hono.Hono();
-adminMediaRoutes.use("*", chunkWRMQX2TP_cjs.requireAuth());
+adminMediaRoutes.use("*", chunkX75QKPYF_cjs.requireAuth());
 adminMediaRoutes.get("/", async (c) => {
   try {
     const user = c.get("user");
@@ -13699,7 +13938,7 @@ adminMediaRoutes.put("/:id", async (c) => {
     `);
   }
 });
-adminMediaRoutes.delete("/cleanup", chunkWRMQX2TP_cjs.requireRole("admin"), async (c) => {
+adminMediaRoutes.delete("/cleanup", chunkX75QKPYF_cjs.requireRole("admin"), async (c) => {
   try {
     const db = c.env.DB;
     const allMediaStmt = db.prepare("SELECT id, r2_key, filename FROM media WHERE deleted_at IS NULL");
@@ -13949,7 +14188,7 @@ function formatFileSize(bytes) {
 }
 
 // src/templates/pages/admin-plugins-list.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 function renderPluginsListPage(data) {
   const categories = [
     { value: "content", label: "Content Management" },
@@ -14429,7 +14668,7 @@ function renderPluginsListPage(data) {
     version: data.version,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 function renderPluginCard(plugin) {
   const statusColors = {
@@ -15084,7 +15323,7 @@ function renderPluginSettingsPage(data) {
     user,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayout(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayout(layoutData);
 }
 function renderStatusBadge(status) {
   const statusColors = {
@@ -15425,7 +15664,7 @@ function formatTimestamp(timestamp) {
 
 // src/routes/admin-plugins.ts
 var adminPluginRoutes = new hono.Hono();
-adminPluginRoutes.use("*", chunkWRMQX2TP_cjs.requireAuth());
+adminPluginRoutes.use("*", chunkX75QKPYF_cjs.requireAuth());
 var AVAILABLE_PLUGINS = [
   {
     id: "third-party-faq",
@@ -15530,6 +15769,19 @@ var AVAILABLE_PLUGINS = [
     permissions: [],
     dependencies: [],
     is_core: true
+  },
+  {
+    id: "ai-search",
+    name: "ai-search-plugin",
+    display_name: "AI Search",
+    description: "Advanced search with Cloudflare AI Search. Full-text search, semantic search, and advanced filtering across all content collections.",
+    version: "1.0.0",
+    author: "SonicJS Team",
+    category: "search",
+    icon: "\u{1F50D}",
+    permissions: [],
+    dependencies: [],
+    is_core: true
   }
 ];
 adminPluginRoutes.get("/", async (c) => {
@@ -15539,7 +15791,7 @@ adminPluginRoutes.get("/", async (c) => {
     if (user?.role !== "admin") {
       return c.text("Access denied", 403);
     }
-    const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+    const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
     let installedPlugins = [];
     let stats = { total: 0, active: 0, inactive: 0, errors: 0, uninstalled: 0 };
     try {
@@ -15608,10 +15860,13 @@ adminPluginRoutes.get("/:id", async (c) => {
     const user = c.get("user");
     const db = c.env.DB;
     const pluginId = c.req.param("id");
+    if (pluginId === "ai-search") {
+      return c.text("", 404);
+    }
     if (user?.role !== "admin") {
       return c.redirect("/admin/plugins");
     }
-    const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+    const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
     const plugin = await pluginService.getPlugin(pluginId);
     if (!plugin) {
       return c.text("Plugin not found", 404);
@@ -15665,7 +15920,7 @@ adminPluginRoutes.post("/:id/activate", async (c) => {
     if (user?.role !== "admin") {
       return c.json({ error: "Access denied" }, 403);
     }
-    const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+    const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
     await pluginService.activatePlugin(pluginId);
     return c.json({ success: true });
   } catch (error) {
@@ -15682,7 +15937,7 @@ adminPluginRoutes.post("/:id/deactivate", async (c) => {
     if (user?.role !== "admin") {
       return c.json({ error: "Access denied" }, 403);
     }
-    const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+    const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
     await pluginService.deactivatePlugin(pluginId);
     return c.json({ success: true });
   } catch (error) {
@@ -15699,7 +15954,7 @@ adminPluginRoutes.post("/install", async (c) => {
       return c.json({ error: "Access denied" }, 403);
     }
     const body = await c.req.json();
-    const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+    const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
     if (body.name === "faq-plugin") {
       const faqPlugin = await pluginService.installPlugin({
         id: "third-party-faq",
@@ -15900,6 +16155,33 @@ adminPluginRoutes.post("/install", async (c) => {
       });
       return c.json({ success: true, plugin: easyMdxPlugin2 });
     }
+    if (body.name === "ai-search-plugin" || body.name === "ai-search") {
+      const defaultSettings = {
+        enabled: true,
+        ai_mode_enabled: true,
+        selected_collections: [],
+        dismissed_collections: [],
+        autocomplete_enabled: true,
+        cache_duration: 1,
+        results_limit: 20,
+        index_media: false
+      };
+      const aiSearchPlugin = await pluginService.installPlugin({
+        id: "ai-search",
+        name: "ai-search-plugin",
+        display_name: "AI Search",
+        description: "Advanced search with Cloudflare AI Search. Full-text search, semantic search, and advanced filtering across all content collections.",
+        version: "1.0.0",
+        author: "SonicJS Team",
+        category: "search",
+        icon: "\u{1F50D}",
+        permissions: [],
+        dependencies: [],
+        is_core: true,
+        settings: defaultSettings
+      });
+      return c.json({ success: true, plugin: aiSearchPlugin });
+    }
     if (body.name === "turnstile-plugin") {
       const turnstilePlugin = await pluginService.installPlugin({
         id: "turnstile",
@@ -15942,7 +16224,7 @@ adminPluginRoutes.post("/:id/uninstall", async (c) => {
     if (user?.role !== "admin") {
       return c.json({ error: "Access denied" }, 403);
     }
-    const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+    const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
     await pluginService.uninstallPlugin(pluginId);
     return c.json({ success: true });
   } catch (error) {
@@ -15960,7 +16242,7 @@ adminPluginRoutes.post("/:id/settings", async (c) => {
       return c.json({ error: "Access denied" }, 403);
     }
     const settings = await c.req.json();
-    const pluginService = new chunkILZ3DP4I_cjs.PluginService(db);
+    const pluginService = new chunkMPT5PA6U_cjs.PluginService(db);
     await pluginService.updatePluginSettings(pluginId, settings);
     return c.json({ success: true });
   } catch (error) {
@@ -15981,7 +16263,7 @@ function formatLastUpdated(timestamp) {
 }
 
 // src/templates/pages/admin-logs-list.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 function renderLogsListPage(data) {
   const { logs, pagination, filters, user } = data;
   const content = `
@@ -16292,7 +16574,7 @@ function renderLogsListPage(data) {
     user,
     content
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 function renderLogDetailsPage(data) {
   const { log, user } = data;
@@ -16504,7 +16786,7 @@ function renderLogDetailsPage(data) {
       </div>
     </div>
   `;
-  return chunkAZLU3ROK_cjs.adminLayoutV2({
+  return chunkBZC4FYW7_cjs.adminLayoutV2({
     title: `Log Details - ${log.id}`,
     user,
     content
@@ -16747,7 +17029,7 @@ function renderLogConfigPage(data) {
 
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
   `;
-  return chunkAZLU3ROK_cjs.adminLayoutV2({
+  return chunkBZC4FYW7_cjs.adminLayoutV2({
     title: "Log Configuration",
     user,
     content
@@ -16756,7 +17038,7 @@ function renderLogConfigPage(data) {
 
 // src/routes/admin-logs.ts
 var adminLogsRoutes = new hono.Hono();
-adminLogsRoutes.use("*", chunkWRMQX2TP_cjs.requireAuth());
+adminLogsRoutes.use("*", chunkX75QKPYF_cjs.requireAuth());
 adminLogsRoutes.get("/", async (c) => {
   try {
     const user = c.get("user");
@@ -17128,7 +17410,7 @@ adminDesignRoutes.get("/", (c) => {
       role: user.role
     } : void 0
   };
-  return c.html(chunkAZLU3ROK_cjs.renderDesignPage(pageData));
+  return c.html(chunkBZC4FYW7_cjs.renderDesignPage(pageData));
 });
 var adminCheckboxRoutes = new hono.Hono();
 adminCheckboxRoutes.get("/", (c) => {
@@ -17140,7 +17422,7 @@ adminCheckboxRoutes.get("/", (c) => {
       role: user.role
     } : void 0
   };
-  return c.html(chunkAZLU3ROK_cjs.renderCheckboxPage(pageData));
+  return c.html(chunkBZC4FYW7_cjs.renderCheckboxPage(pageData));
 });
 
 // src/templates/pages/admin-testimonials-form.template.ts
@@ -17168,7 +17450,7 @@ function renderTestimonialsForm(data) {
         </div>
       </div>
 
-      ${message ? chunkAZLU3ROK_cjs.renderAlert({ type: messageType || "info", message, dismissible: true }) : ""}
+      ${message ? chunkBZC4FYW7_cjs.renderAlert({ type: messageType || "info", message, dismissible: true }) : ""}
 
       <!-- Form -->
       <div class="backdrop-blur-xl bg-white/10 rounded-xl border border-white/20 shadow-2xl">
@@ -17397,7 +17679,7 @@ function renderTestimonialsForm(data) {
     user: data.user,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayout(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayout(layoutData);
 }
 function escapeHtml4(unsafe) {
   return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
@@ -17423,7 +17705,7 @@ adminTestimonialsRoutes.get("/", async (c) => {
     const offset = (currentPage - 1) * limit;
     const db = c.env?.DB;
     if (!db) {
-      return c.html(chunkAZLU3ROK_cjs.renderTestimonialsList({
+      return c.html(chunkBZC4FYW7_cjs.renderTestimonialsList({
         testimonials: [],
         totalCount: 0,
         currentPage: 1,
@@ -17463,7 +17745,7 @@ adminTestimonialsRoutes.get("/", async (c) => {
     `;
     const { results: testimonials } = await db.prepare(dataQuery).bind(...params, limit, offset).all();
     const totalPages = Math.ceil(totalCount / limit);
-    return c.html(chunkAZLU3ROK_cjs.renderTestimonialsList({
+    return c.html(chunkBZC4FYW7_cjs.renderTestimonialsList({
       testimonials: testimonials || [],
       totalCount,
       currentPage,
@@ -17477,7 +17759,7 @@ adminTestimonialsRoutes.get("/", async (c) => {
   } catch (error) {
     console.error("Error fetching testimonials:", error);
     const user = c.get("user");
-    return c.html(chunkAZLU3ROK_cjs.renderTestimonialsList({
+    return c.html(chunkBZC4FYW7_cjs.renderTestimonialsList({
       testimonials: [],
       totalCount: 0,
       currentPage: 1,
@@ -17796,7 +18078,7 @@ function renderCodeExamplesForm(data) {
         </div>
       </div>
 
-      ${message ? chunkAZLU3ROK_cjs.renderAlert({ type: messageType || "info", message, dismissible: true }) : ""}
+      ${message ? chunkBZC4FYW7_cjs.renderAlert({ type: messageType || "info", message, dismissible: true }) : ""}
 
       <!-- Form -->
       <div class="backdrop-blur-xl bg-white/10 rounded-xl border border-white/20 shadow-2xl">
@@ -18066,7 +18348,7 @@ function renderCodeExamplesForm(data) {
     user: data.user,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayout(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayout(layoutData);
 }
 function escapeHtml5(unsafe) {
   return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
@@ -18093,7 +18375,7 @@ adminCodeExamplesRoutes.get("/", async (c) => {
     const offset = (currentPage - 1) * limit;
     const db = c.env?.DB;
     if (!db) {
-      return c.html(chunkAZLU3ROK_cjs.renderCodeExamplesList({
+      return c.html(chunkBZC4FYW7_cjs.renderCodeExamplesList({
         codeExamples: [],
         totalCount: 0,
         currentPage: 1,
@@ -18133,7 +18415,7 @@ adminCodeExamplesRoutes.get("/", async (c) => {
     `;
     const { results: codeExamples } = await db.prepare(dataQuery).bind(...params, limit, offset).all();
     const totalPages = Math.ceil(totalCount / limit);
-    return c.html(chunkAZLU3ROK_cjs.renderCodeExamplesList({
+    return c.html(chunkBZC4FYW7_cjs.renderCodeExamplesList({
       codeExamples: codeExamples || [],
       totalCount,
       currentPage,
@@ -18147,7 +18429,7 @@ adminCodeExamplesRoutes.get("/", async (c) => {
   } catch (error) {
     console.error("Error fetching code examples:", error);
     const user = c.get("user");
-    return c.html(chunkAZLU3ROK_cjs.renderCodeExamplesList({
+    return c.html(chunkBZC4FYW7_cjs.renderCodeExamplesList({
       codeExamples: [],
       totalCount: 0,
       currentPage: 1,
@@ -18536,7 +18818,7 @@ function renderDashboardPage(data) {
     version: data.version,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayout(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayout(layoutData);
 }
 function renderStatsCards(stats) {
   const cards = [
@@ -19086,7 +19368,7 @@ function renderStorageUsage(databaseSizeBytes, mediaSizeBytes) {
 // src/routes/admin-dashboard.ts
 var VERSION = chunkJZM4YII7_cjs.getCoreVersion();
 var router = new hono.Hono();
-router.use("*", chunkWRMQX2TP_cjs.requireAuth());
+router.use("*", chunkX75QKPYF_cjs.requireAuth());
 router.get("/", async (c) => {
   const user = c.get("user");
   try {
@@ -19311,7 +19593,7 @@ router.get("/system-status", async (c) => {
 });
 
 // src/templates/pages/admin-collections-list.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 
 // src/templates/components/table.template.ts
 function renderTable2(data) {
@@ -19785,11 +20067,11 @@ function renderCollectionsListPage(data) {
     version: data.version,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 
 // src/templates/pages/admin-collections-form.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 function getFieldTypeBadge(fieldType) {
   const typeLabels = {
     "text": "Text",
@@ -19800,7 +20082,8 @@ function getFieldTypeBadge(fieldType) {
     "boolean": "Boolean",
     "date": "Date",
     "select": "Select",
-    "media": "Media"
+    "media": "Media",
+    "reference": "Reference"
   };
   const typeColors = {
     "text": "bg-blue-500/10 dark:bg-blue-400/10 text-blue-700 dark:text-blue-300 ring-blue-500/20 dark:ring-blue-400/20",
@@ -19811,7 +20094,8 @@ function getFieldTypeBadge(fieldType) {
     "boolean": "bg-amber-500/10 dark:bg-amber-400/10 text-amber-700 dark:text-amber-300 ring-amber-500/20 dark:ring-amber-400/20",
     "date": "bg-cyan-500/10 dark:bg-cyan-400/10 text-cyan-700 dark:text-cyan-300 ring-cyan-500/20 dark:ring-cyan-400/20",
     "select": "bg-indigo-500/10 dark:bg-indigo-400/10 text-indigo-700 dark:text-indigo-300 ring-indigo-500/20 dark:ring-indigo-400/20",
-    "media": "bg-rose-500/10 dark:bg-rose-400/10 text-rose-700 dark:text-rose-300 ring-rose-500/20 dark:ring-rose-400/20"
+    "media": "bg-rose-500/10 dark:bg-rose-400/10 text-rose-700 dark:text-rose-300 ring-rose-500/20 dark:ring-rose-400/20",
+    "reference": "bg-teal-500/10 dark:bg-teal-400/10 text-teal-700 dark:text-teal-300 ring-teal-500/20 dark:ring-teal-400/20"
   };
   const label = typeLabels[fieldType] || fieldType;
   const color = typeColors[fieldType] || "bg-zinc-500/10 dark:bg-zinc-400/10 text-zinc-700 dark:text-zinc-300 ring-zinc-500/20 dark:ring-zinc-400/20";
@@ -20050,7 +20334,7 @@ function renderCollectionFormPage(data) {
             }
           </style>
           
-          ${chunkAZLU3ROK_cjs.renderForm(formData)}
+          ${chunkBZC4FYW7_cjs.renderForm(formData)}
 
           ${isEdit && data.managed ? `
             <!-- Read-Only Fields Display for Managed Collections -->
@@ -20291,6 +20575,7 @@ function renderCollectionFormPage(data) {
                 <option value="date">Date</option>
                 <option value="select">Select</option>
                 <option value="media">Media</option>
+                <option value="reference">Reference</option>
               </select>
               <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-blue-600 dark:text-blue-400 sm:size-4">
                 <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
@@ -20608,11 +20893,14 @@ function renderCollectionFormPage(data) {
         }
 
         // Show/hide options container based on field type
-        const fieldType = field.field_type;
+        // Use the dropdown's actual value (not field.field_type) to ensure consistency
+        const fieldType = fieldTypeSelect?.value || field.field_type;
         const optionsContainer = document.getElementById('field-options-container');
         const helpText = document.getElementById('field-type-help');
 
-        if (['select', 'media', 'richtext'].includes(fieldType)) {
+        console.log('[Edit Field] Showing options for field type:', fieldType, '(original:', field.field_type, ')');
+
+        if (['select', 'media', 'richtext', 'reference'].includes(fieldType)) {
           optionsContainer.classList.remove('hidden');
 
           // Set help text based on type
@@ -20625,6 +20913,9 @@ function renderCollectionFormPage(data) {
               break;
             case 'richtext':
               helpText.textContent = 'Full-featured WYSIWYG text editor with formatting options';
+              break;
+            case 'reference':
+              helpText.textContent = 'Link to content from other collections';
               break;
           }
         } else {
@@ -20760,7 +21051,7 @@ function renderCollectionFormPage(data) {
         const fieldNameInput = document.getElementById('modal-field-name');
 
         // Show/hide options based on field type
-        if (['select', 'media', 'richtext', 'guid'].includes(this.value)) {
+        if (['select', 'media', 'richtext', 'guid', 'reference'].includes(this.value)) {
           optionsContainer.classList.remove('hidden');
 
           // Set default options and help text based on type
@@ -20776,6 +21067,10 @@ function renderCollectionFormPage(data) {
             case 'richtext':
               fieldOptions.value = '{"toolbar": "full", "height": 400}';
               helpText.textContent = 'Full-featured WYSIWYG text editor with formatting options';
+              break;
+            case 'reference':
+              fieldOptions.value = '{"collection": ["pages", "posts"]}';
+              helpText.textContent = 'Link to content from other collections';
               break;
           }
         } else {
@@ -20839,12 +21134,12 @@ function renderCollectionFormPage(data) {
     version: data.version,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 
 // src/routes/admin-collections.ts
 var adminCollectionsRoutes = new hono.Hono();
-adminCollectionsRoutes.use("*", chunkWRMQX2TP_cjs.requireAuth());
+adminCollectionsRoutes.use("*", chunkX75QKPYF_cjs.requireAuth());
 adminCollectionsRoutes.get("/", async (c) => {
   try {
     const user = c.get("user");
@@ -21345,6 +21640,8 @@ adminCollectionsRoutes.post("/:id/fields", async (c) => {
         fieldConfig.type = "quill";
       } else if (fieldType === "mdxeditor") {
         fieldConfig.type = "mdxeditor";
+      } else if (fieldType === "reference") {
+        fieldConfig.type = "reference";
       }
       schema.properties[fieldName] = fieldConfig;
       if (isRequired && !schema.required.includes(fieldName)) {
@@ -21433,8 +21730,15 @@ adminCollectionsRoutes.put("/:collectionId/fields/:fieldId", async (c) => {
         schema.required = [];
       }
       if (schema.properties[fieldName]) {
+        let parsedFieldOptions = {};
+        try {
+          parsedFieldOptions = JSON.parse(fieldOptions);
+        } catch (e) {
+          console.error("[Field Update] Error parsing field options:", e);
+        }
         const updatedFieldConfig = {
           ...schema.properties[fieldName],
+          ...parsedFieldOptions,
           type: fieldType,
           title: fieldLabel,
           searchable: isSearchable
@@ -21560,7 +21864,7 @@ adminCollectionsRoutes.post("/:collectionId/fields/reorder", async (c) => {
 });
 
 // src/templates/pages/admin-settings.template.ts
-chunkAZLU3ROK_cjs.init_admin_layout_catalyst_template();
+chunkBZC4FYW7_cjs.init_admin_layout_catalyst_template();
 function renderSettingsPage(data) {
   const activeTab = data.activeTab || "general";
   const pageContent = `
@@ -21942,7 +22246,7 @@ function renderSettingsPage(data) {
     version: data.version,
     content: pageContent
   };
-  return chunkAZLU3ROK_cjs.renderAdminLayoutCatalyst(layoutData);
+  return chunkBZC4FYW7_cjs.renderAdminLayoutCatalyst(layoutData);
 }
 function renderTabButton(tabId, label, iconPath, activeTab) {
   const isActive = activeTab === tabId;
@@ -23024,7 +23328,7 @@ function renderDatabaseToolsSettings(settings) {
 
 // src/routes/admin-settings.ts
 var adminSettingsRoutes = new hono.Hono();
-adminSettingsRoutes.use("*", chunkWRMQX2TP_cjs.requireAuth());
+adminSettingsRoutes.use("*", chunkX75QKPYF_cjs.requireAuth());
 function getMockSettings(user) {
   return {
     general: {
@@ -23192,7 +23496,7 @@ adminSettingsRoutes.get("/database-tools", (c) => {
 adminSettingsRoutes.get("/api/migrations/status", async (c) => {
   try {
     const db = c.env.DB;
-    const migrationService = new chunkYRWJSXFT_cjs.MigrationService(db);
+    const migrationService = new chunkH2FWK3AC_cjs.MigrationService(db);
     const status = await migrationService.getMigrationStatus();
     return c.json({
       success: true,
@@ -23216,7 +23520,7 @@ adminSettingsRoutes.post("/api/migrations/run", async (c) => {
       }, 403);
     }
     const db = c.env.DB;
-    const migrationService = new chunkYRWJSXFT_cjs.MigrationService(db);
+    const migrationService = new chunkH2FWK3AC_cjs.MigrationService(db);
     const result = await migrationService.runPendingMigrations();
     return c.json({
       success: result.success,
@@ -23234,7 +23538,7 @@ adminSettingsRoutes.post("/api/migrations/run", async (c) => {
 adminSettingsRoutes.get("/api/migrations/validate", async (c) => {
   try {
     const db = c.env.DB;
-    const migrationService = new chunkYRWJSXFT_cjs.MigrationService(db);
+    const migrationService = new chunkH2FWK3AC_cjs.MigrationService(db);
     const validation = await migrationService.validateSchema();
     return c.json({
       success: true,
@@ -23475,9 +23779,8 @@ exports.api_default = api_default;
 exports.api_media_default = api_media_default;
 exports.api_system_default = api_system_default;
 exports.auth_default = auth_default;
-exports.checkAdminUserExists = checkAdminUserExists;
 exports.router = router;
 exports.test_cleanup_default = test_cleanup_default;
 exports.userRoutes = userRoutes;
-//# sourceMappingURL=chunk-55K2TBUS.cjs.map
-//# sourceMappingURL=chunk-55K2TBUS.cjs.map
+//# sourceMappingURL=chunk-6VPV6FFN.cjs.map
+//# sourceMappingURL=chunk-6VPV6FFN.cjs.map
