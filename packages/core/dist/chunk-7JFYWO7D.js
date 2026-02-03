@@ -1,10 +1,10 @@
-import { getCacheService, CACHE_CONFIGS, getLogger, SettingsService } from './chunk-5PH7K7YR.js';
-import { requireAuth, isPluginActive, requireRole, AuthManager, logActivity } from './chunk-FQAOOSEB.js';
+import { getCacheService, CACHE_CONFIGS, getLogger, SettingsService } from './chunk-G44QUVNM.js';
+import { requireAuth, isPluginActive, requireRole, AuthManager, logActivity } from './chunk-KG2T5MEF.js';
 import { PluginService } from './chunk-YFJJU26H.js';
-import { MigrationService } from './chunk-DADFCDML.js';
+import { MigrationService } from './chunk-G3PQ6SOC.js';
 import { init_admin_layout_catalyst_template, renderDesignPage, renderCheckboxPage, renderTestimonialsList, renderCodeExamplesList, renderAlert, renderTable, renderPagination, renderConfirmationDialog, getConfirmationDialogScript, renderAdminLayoutCatalyst, renderAdminLayout, adminLayoutV2, renderForm } from './chunk-VCH6HXVP.js';
 import { PluginBuilder, TurnstileService } from './chunk-J5WGMRSU.js';
-import { QueryFilterBuilder, sanitizeInput, getCoreVersion, escapeHtml, getBlocksFieldConfig, parseBlocksValue } from './chunk-PSRPBW3W.js';
+import { QueryFilterBuilder, sanitizeInput, getCoreVersion, escapeHtml, getBlocksFieldConfig, parseBlocksValue } from './chunk-34QIAULP.js';
 import { metricsTracker } from './chunk-FICTAGD4.js';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
@@ -2231,7 +2231,7 @@ adminApiRoutes.delete("/collections/:id", async (c) => {
 });
 adminApiRoutes.get("/migrations/status", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-WJVCIKQO.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-VMQXPJOV.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const status = await migrationService.getMigrationStatus();
@@ -2256,7 +2256,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
         error: "Unauthorized. Admin access required."
       }, 403);
     }
-    const { MigrationService: MigrationService2 } = await import('./migrations-WJVCIKQO.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-VMQXPJOV.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const result = await migrationService.runPendingMigrations();
@@ -2275,7 +2275,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
 });
 adminApiRoutes.get("/migrations/validate", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-WJVCIKQO.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-VMQXPJOV.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const validation = await migrationService.validateSchema();
@@ -4005,7 +4005,15 @@ function getReadFieldValueScript() {
   `;
 }
 function renderDynamicField(field, options = {}) {
-  const { value = "", errors = [], disabled = false, className = "", pluginStatuses = {}, collectionId = "", contentId = "" } = options;
+  const {
+    value = "",
+    errors = [],
+    disabled = false,
+    className = "",
+    pluginStatuses = {},
+    collectionId = "",
+    contentId = ""
+  } = options;
   const opts = field.field_options || {};
   const required = field.is_required ? "required" : "";
   const baseClasses = `w-full rounded-lg px-3 py-2 text-sm text-zinc-950 dark:text-white bg-white dark:bg-zinc-800 shadow-sm ring-1 ring-inset ring-zinc-950/10 dark:ring-white/10 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-shadow ${className}`;
@@ -4526,7 +4534,8 @@ function renderDynamicField(field, options = {}) {
 
           ${isMultiple ? `
             <div class="media-preview-grid grid grid-cols-4 gap-2 mb-2 ${mediaValues.length === 0 ? "hidden" : ""}" id="${fieldId}-preview">
-              ${mediaValues.map((url, idx) => `
+              ${mediaValues.map(
+        (url, idx) => `
                 <div class="relative media-preview-item" data-url="${url}">
                   ${renderMediaPreview(url, `Media ${idx + 1}`, "w-full h-24 object-cover rounded-lg border border-white/20")}
                   <button
@@ -4540,7 +4549,8 @@ function renderDynamicField(field, options = {}) {
                     </svg>
                   </button>
                 </div>
-              `).join("")}
+              `
+      ).join("")}
             </div>
           ` : `
             <div class="media-preview ${singleValue ? "" : "hidden"}" id="${fieldId}-preview">
@@ -4712,11 +4722,23 @@ function renderStructuredObjectField(field, options, baseClasses, errorClasses) 
       field.field_name
     )
   ).join("");
+  const groupTitle = field.field_label || field.field_name;
+  const groupId = `object-${field.field_name}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   return `
-    <div class="space-y-4" data-structured-object data-field-name="${escapeHtml2(fieldName)}">
-      <input type="hidden" id="${fieldId}" name="${fieldName}" value="${escapeHtml2(JSON.stringify(objectValue))}">
-      <div class="space-y-4" data-structured-object-fields>
-        ${subfields}
+    <div class="field-group rounded-lg shadow-sm mb-6" data-structured-object data-field-name="${escapeHtml2(fieldName)}">
+      <div class="field-group-header border-b border-zinc-950/5 dark:border-white/10 pr-6 py-4 cursor-pointer" onclick="toggleFieldGroup('${groupId}')">
+        <h3 class="text-base/7 font-semibold text-zinc-950 dark:text-white flex items-center">
+          ${escapeHtml2(groupTitle)}
+          <svg id="${groupId}-icon" class="w-5 h-5 ml-2 transform transition-transform rotate-[-90deg] text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </h3>
+      </div>
+      <div id="${groupId}-content" class="field-group-content px-6 py-6 space-y-4 hidden">
+        <input type="hidden" id="${fieldId}" name="${fieldName}" value="${escapeHtml2(JSON.stringify(objectValue))}">
+        <div class="space-y-4" data-structured-object-fields>
+          ${subfields}
+        </div>
       </div>
     </div>
     ${getStructuredFieldScript()}
@@ -4952,7 +4974,7 @@ function renderBlockCard(field, block, discriminator, index, data, pluginStatuse
     `;
   }).join("");
   return `
-    <div class="blocks-item rounded-lg border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-white/5 p-4 shadow-sm" data-block-type="${escapeHtml2(block.name)}" data-block-discriminator="${escapeHtml2(discriminator)}" draggable="true">
+    <div class="blocks-item rounded-lg border border-zinc-200 dark:border-white/10 p-4 shadow-lg shadow-zinc-950/60" data-block-type="${escapeHtml2(block.name)}" data-block-discriminator="${escapeHtml2(discriminator)}" draggable="true">
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-start gap-3">
           <div class="drag-handle cursor-move text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-400" data-action="drag-handle" title="Drag to reorder">
@@ -5388,13 +5410,16 @@ function getBlocksFieldScript() {
 }
 function escapeHtml2(text) {
   if (typeof text !== "string") return String(text || "");
-  return text.replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char] || char);
+  return text.replace(
+    /[&<>"']/g,
+    (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char] || char
+  );
 }
 
 // src/plugins/available/tinymce-plugin/index.ts
@@ -27758,5 +27783,5 @@ var ROUTES_INFO = {
 };
 
 export { ROUTES_INFO, adminCheckboxRoutes, adminCollectionsRoutes, adminDesignRoutes, adminFormsRoutes, adminLogsRoutes, adminMediaRoutes, adminPluginRoutes, adminSettingsRoutes, admin_api_default, admin_code_examples_default, admin_content_default, admin_testimonials_default, api_content_crud_default, api_default, api_media_default, api_system_default, auth_default, getConfirmationDialogScript2 as getConfirmationDialogScript, public_forms_default, renderConfirmationDialog2 as renderConfirmationDialog, router, router2, test_cleanup_default, userRoutes };
-//# sourceMappingURL=chunk-7DU5PUKL.js.map
-//# sourceMappingURL=chunk-7DU5PUKL.js.map
+//# sourceMappingURL=chunk-7JFYWO7D.js.map
+//# sourceMappingURL=chunk-7JFYWO7D.js.map
