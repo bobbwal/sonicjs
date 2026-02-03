@@ -944,18 +944,19 @@ function renderStructuredObjectField(
 
   const groupTitle = field.field_label || field.field_name
   const groupId = `object-${field.field_name}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+  const isCollapsed = opts.collapsed !== false
 
   return `
     <div class="field-group rounded-lg shadow-sm mb-6" data-structured-object data-field-name="${escapeHtml(fieldName)}">
       <div class="field-group-header border-b border-zinc-950/5 dark:border-white/10 pr-6 py-4 cursor-pointer" onclick="toggleFieldGroup('${groupId}')">
         <h3 class="text-base/7 font-semibold text-zinc-950 dark:text-white flex items-center">
           ${escapeHtml(groupTitle)}
-          <svg id="${groupId}-icon" class="w-5 h-5 ml-2 transform transition-transform rotate-[-90deg] text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg id="${groupId}-icon" class="w-5 h-5 ml-2 transform transition-transform ${isCollapsed ? 'rotate-[-90deg]' : ''} text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
           </svg>
         </h3>
       </div>
-      <div id="${groupId}-content" class="field-group-content px-6 py-6 space-y-4 hidden">
+      <div id="${groupId}-content" class="field-group-content px-6 py-6 space-y-4 ${isCollapsed ? 'hidden' : ''}">
         <input type="hidden" id="${fieldId}" name="${fieldName}" value="${escapeHtml(JSON.stringify(objectValue))}">
         <div class="space-y-4" data-structured-object-fields>
           ${subfields}

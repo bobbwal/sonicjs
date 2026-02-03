@@ -1,7 +1,7 @@
 import { getCacheService, CACHE_CONFIGS, getLogger, SettingsService } from './chunk-G44QUVNM.js';
-import { requireAuth, isPluginActive, requireRole, AuthManager, logActivity } from './chunk-KG2T5MEF.js';
+import { requireAuth, isPluginActive, requireRole, AuthManager, logActivity } from './chunk-ZCNNPWDM.js';
 import { PluginService } from './chunk-YFJJU26H.js';
-import { MigrationService } from './chunk-G3PQ6SOC.js';
+import { MigrationService } from './chunk-34UWEZ5P.js';
 import { init_admin_layout_catalyst_template, renderDesignPage, renderCheckboxPage, renderTestimonialsList, renderCodeExamplesList, renderAlert, renderTable, renderPagination, renderConfirmationDialog, getConfirmationDialogScript, renderAdminLayoutCatalyst, renderAdminLayout, adminLayoutV2, renderForm } from './chunk-VCH6HXVP.js';
 import { PluginBuilder, TurnstileService } from './chunk-J5WGMRSU.js';
 import { QueryFilterBuilder, sanitizeInput, getCoreVersion, escapeHtml, getBlocksFieldConfig, parseBlocksValue } from './chunk-34QIAULP.js';
@@ -2231,7 +2231,7 @@ adminApiRoutes.delete("/collections/:id", async (c) => {
 });
 adminApiRoutes.get("/migrations/status", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-VMQXPJOV.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-ZDXTCA37.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const status = await migrationService.getMigrationStatus();
@@ -2256,7 +2256,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
         error: "Unauthorized. Admin access required."
       }, 403);
     }
-    const { MigrationService: MigrationService2 } = await import('./migrations-VMQXPJOV.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-ZDXTCA37.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const result = await migrationService.runPendingMigrations();
@@ -2275,7 +2275,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
 });
 adminApiRoutes.get("/migrations/validate", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-VMQXPJOV.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-ZDXTCA37.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const validation = await migrationService.validateSchema();
@@ -4724,17 +4724,18 @@ function renderStructuredObjectField(field, options, baseClasses, errorClasses) 
   ).join("");
   const groupTitle = field.field_label || field.field_name;
   const groupId = `object-${field.field_name}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const isCollapsed = opts.collapsed !== false;
   return `
     <div class="field-group rounded-lg shadow-sm mb-6" data-structured-object data-field-name="${escapeHtml2(fieldName)}">
       <div class="field-group-header border-b border-zinc-950/5 dark:border-white/10 pr-6 py-4 cursor-pointer" onclick="toggleFieldGroup('${groupId}')">
         <h3 class="text-base/7 font-semibold text-zinc-950 dark:text-white flex items-center">
           ${escapeHtml2(groupTitle)}
-          <svg id="${groupId}-icon" class="w-5 h-5 ml-2 transform transition-transform rotate-[-90deg] text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg id="${groupId}-icon" class="w-5 h-5 ml-2 transform transition-transform ${isCollapsed ? "rotate-[-90deg]" : ""} text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
           </svg>
         </h3>
       </div>
-      <div id="${groupId}-content" class="field-group-content px-6 py-6 space-y-4 hidden">
+      <div id="${groupId}-content" class="field-group-content px-6 py-6 space-y-4 ${isCollapsed ? "hidden" : ""}">
         <input type="hidden" id="${fieldId}" name="${fieldName}" value="${escapeHtml2(JSON.stringify(objectValue))}">
         <div class="space-y-4" data-structured-object-fields>
           ${subfields}
@@ -27783,5 +27784,5 @@ var ROUTES_INFO = {
 };
 
 export { ROUTES_INFO, adminCheckboxRoutes, adminCollectionsRoutes, adminDesignRoutes, adminFormsRoutes, adminLogsRoutes, adminMediaRoutes, adminPluginRoutes, adminSettingsRoutes, admin_api_default, admin_code_examples_default, admin_content_default, admin_testimonials_default, api_content_crud_default, api_default, api_media_default, api_system_default, auth_default, getConfirmationDialogScript2 as getConfirmationDialogScript, public_forms_default, renderConfirmationDialog2 as renderConfirmationDialog, router, router2, test_cleanup_default, userRoutes };
-//# sourceMappingURL=chunk-7JFYWO7D.js.map
-//# sourceMappingURL=chunk-7JFYWO7D.js.map
+//# sourceMappingURL=chunk-KU2LM7A2.js.map
+//# sourceMappingURL=chunk-KU2LM7A2.js.map
