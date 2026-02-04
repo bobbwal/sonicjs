@@ -1,7 +1,7 @@
 import { getCacheService, CACHE_CONFIGS, getLogger, SettingsService } from './chunk-G44QUVNM.js';
-import { requireAuth, isPluginActive, requireRole, AuthManager, logActivity } from './chunk-ZCNNPWDM.js';
+import { requireAuth, isPluginActive, requireRole, AuthManager, logActivity } from './chunk-4RI4HEH7.js';
 import { PluginService } from './chunk-YFJJU26H.js';
-import { MigrationService } from './chunk-34UWEZ5P.js';
+import { MigrationService } from './chunk-75NKKFK6.js';
 import { init_admin_layout_catalyst_template, renderDesignPage, renderCheckboxPage, renderTestimonialsList, renderCodeExamplesList, renderAlert, renderTable, renderPagination, renderConfirmationDialog, getConfirmationDialogScript, renderAdminLayoutCatalyst, renderAdminLayout, adminLayoutV2, renderForm } from './chunk-VCH6HXVP.js';
 import { PluginBuilder, TurnstileService } from './chunk-J5WGMRSU.js';
 import { QueryFilterBuilder, sanitizeInput, getCoreVersion, escapeHtml, getBlocksFieldConfig, parseBlocksValue } from './chunk-34QIAULP.js';
@@ -2231,7 +2231,7 @@ adminApiRoutes.delete("/collections/:id", async (c) => {
 });
 adminApiRoutes.get("/migrations/status", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-ZDXTCA37.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-QIYXZTM4.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const status = await migrationService.getMigrationStatus();
@@ -2256,7 +2256,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
         error: "Unauthorized. Admin access required."
       }, 403);
     }
-    const { MigrationService: MigrationService2 } = await import('./migrations-ZDXTCA37.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-QIYXZTM4.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const result = await migrationService.runPendingMigrations();
@@ -2275,7 +2275,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
 });
 adminApiRoutes.get("/migrations/validate", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-ZDXTCA37.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-QIYXZTM4.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const validation = await migrationService.validateSchema();
@@ -4975,8 +4975,8 @@ function renderBlockCard(field, block, discriminator, index, data, pluginStatuse
     `;
   }).join("");
   return `
-    <div class="blocks-item rounded-lg border border-zinc-200 dark:border-white/10 p-4 shadow-lg shadow-zinc-950/60" data-block-type="${escapeHtml2(block.name)}" data-block-discriminator="${escapeHtml2(discriminator)}" draggable="true">
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div class="blocks-item rounded-lg border border-zinc-200 dark:border-white/10 p-4 shadow-lg shadow-zinc-950/20" data-block-type="${escapeHtml2(block.name)}" data-block-discriminator="${escapeHtml2(discriminator)}" draggable="true">
+      <div class="flex flex-col gap-3 pb-2 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-start gap-3">
           <div class="drag-handle cursor-move text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-400" data-action="drag-handle" title="Drag to reorder">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -4992,6 +4992,11 @@ function renderBlockCard(field, block, discriminator, index, data, pluginStatuse
           </div>
         </div>
         <div class="flex flex-wrap gap-2 text-xs">
+          <button type="button" data-action="toggle-block" class="inline-flex items-center justify-center rounded-md border border-zinc-200 px-2 py-1 text-zinc-600 hover:bg-zinc-100 dark:border-white/10 dark:text-zinc-300 dark:hover:bg-white/10" aria-label="Expand block" title="Expand">
+            <svg class="h-4 w-4 transition-transform rotate-[-90deg] text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" data-block-toggle-icon>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
           <button type="button" data-action="move-up" class="inline-flex items-center justify-center rounded-md border border-zinc-200 px-2 py-1 text-zinc-600 hover:bg-zinc-100 dark:border-white/10 dark:text-zinc-300 dark:hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent dark:disabled:hover:bg-transparent" aria-label="Move block up" title="Move up">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6l-4 4m4-4l4 4m-4-4v12"/>
@@ -5010,7 +5015,7 @@ function renderBlockCard(field, block, discriminator, index, data, pluginStatuse
           </button>
         </div>
       </div>
-      <div class="mt-4 space-y-4">
+      <div class="mt-4 space-y-4 hidden" data-block-content>
         ${blockFields}
       </div>
     </div>
@@ -5348,9 +5353,28 @@ function getBlocksFieldScript() {
               const item = actionButton.closest('.blocks-item');
               if (!item || !list) return;
 
+              if (action === 'toggle-block') {
+                const content = item.querySelector('[data-block-content]');
+                const icon = actionButton.querySelector('[data-block-toggle-icon]');
+                if (!content) return;
+                const isHidden = content.classList.contains('hidden');
+                content.classList.toggle('hidden', !isHidden);
+                if (icon) {
+                  icon.classList.toggle('rotate-[-90deg]', !isHidden);
+                }
+                return;
+              }
+
               if (action === 'remove-block') {
-                item.remove();
-                updateHiddenInput();
+                if (typeof requestRepeaterDelete === 'function') {
+                  requestRepeaterDelete(() => {
+                    item.remove();
+                    updateHiddenInput();
+                  }, 'block');
+                } else {
+                  item.remove();
+                  updateHiddenInput();
+                }
                 return;
               }
 
@@ -27784,5 +27808,5 @@ var ROUTES_INFO = {
 };
 
 export { ROUTES_INFO, adminCheckboxRoutes, adminCollectionsRoutes, adminDesignRoutes, adminFormsRoutes, adminLogsRoutes, adminMediaRoutes, adminPluginRoutes, adminSettingsRoutes, admin_api_default, admin_code_examples_default, admin_content_default, admin_testimonials_default, api_content_crud_default, api_default, api_media_default, api_system_default, auth_default, getConfirmationDialogScript2 as getConfirmationDialogScript, public_forms_default, renderConfirmationDialog2 as renderConfirmationDialog, router, router2, test_cleanup_default, userRoutes };
-//# sourceMappingURL=chunk-KU2LM7A2.js.map
-//# sourceMappingURL=chunk-KU2LM7A2.js.map
+//# sourceMappingURL=chunk-QTTO3DRB.js.map
+//# sourceMappingURL=chunk-QTTO3DRB.js.map

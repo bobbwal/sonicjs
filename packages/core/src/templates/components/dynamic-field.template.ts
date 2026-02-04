@@ -1302,8 +1302,8 @@ function renderBlockCard(
     .join('')
 
   return `
-    <div class="blocks-item rounded-lg border border-zinc-200 dark:border-white/10 p-4 shadow-lg shadow-zinc-950/60" data-block-type="${escapeHtml(block.name)}" data-block-discriminator="${escapeHtml(discriminator)}" draggable="true">
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div class="blocks-item rounded-lg border border-zinc-200 dark:border-white/10 p-4 shadow-lg shadow-zinc-950/20" data-block-type="${escapeHtml(block.name)}" data-block-discriminator="${escapeHtml(discriminator)}" draggable="true">
+      <div class="flex flex-col gap-3 pb-2 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-start gap-3">
           <div class="drag-handle cursor-move text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-400" data-action="drag-handle" title="Drag to reorder">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -1319,6 +1319,11 @@ function renderBlockCard(
           </div>
         </div>
         <div class="flex flex-wrap gap-2 text-xs">
+          <button type="button" data-action="toggle-block" class="inline-flex items-center justify-center rounded-md border border-zinc-200 px-2 py-1 text-zinc-600 hover:bg-zinc-100 dark:border-white/10 dark:text-zinc-300 dark:hover:bg-white/10" aria-label="Expand block" title="Expand">
+            <svg class="h-4 w-4 transition-transform rotate-[-90deg] text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" data-block-toggle-icon>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
           <button type="button" data-action="move-up" class="inline-flex items-center justify-center rounded-md border border-zinc-200 px-2 py-1 text-zinc-600 hover:bg-zinc-100 dark:border-white/10 dark:text-zinc-300 dark:hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent dark:disabled:hover:bg-transparent" aria-label="Move block up" title="Move up">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6l-4 4m4-4l4 4m-4-4v12"/>
@@ -1337,7 +1342,7 @@ function renderBlockCard(
           </button>
         </div>
       </div>
-      <div class="mt-4 space-y-4">
+      <div class="mt-4 space-y-4 hidden" data-block-content>
         ${blockFields}
       </div>
     </div>
@@ -1680,9 +1685,28 @@ function getBlocksFieldScript(): string {
               const item = actionButton.closest('.blocks-item');
               if (!item || !list) return;
 
+              if (action === 'toggle-block') {
+                const content = item.querySelector('[data-block-content]');
+                const icon = actionButton.querySelector('[data-block-toggle-icon]');
+                if (!content) return;
+                const isHidden = content.classList.contains('hidden');
+                content.classList.toggle('hidden', !isHidden);
+                if (icon) {
+                  icon.classList.toggle('rotate-[-90deg]', !isHidden);
+                }
+                return;
+              }
+
               if (action === 'remove-block') {
-                item.remove();
-                updateHiddenInput();
+                if (typeof requestRepeaterDelete === 'function') {
+                  requestRepeaterDelete(() => {
+                    item.remove();
+                    updateHiddenInput();
+                  }, 'block');
+                } else {
+                  item.remove();
+                  updateHiddenInput();
+                }
                 return;
               }
 
