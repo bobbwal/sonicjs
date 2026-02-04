@@ -4792,7 +4792,7 @@ function renderStructuredArrayField(field, options, baseClasses, errorClasses) {
 function renderStructuredArrayItem(field, itemConfig, index, itemValue, pluginStatuses) {
   const itemFields = renderStructuredItemFields(field, itemConfig, index, itemValue, pluginStatuses);
   return `
-    <div class="structured-array-item rounded-lg border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-white/5 p-4 shadow-sm" data-array-index="${escapeHtml2(index)}" draggable="true">
+    <div class="structured-array-item rounded-lg border border-zinc-200 dark:border-white/10 bg-white/60 dark:bg-zinc-600/5 p-4 shadow-lg shadow-zinc-950/20" data-array-index="${escapeHtml2(index)}" draggable="true">
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-center gap-3">
           <div class="drag-handle cursor-move text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-400" data-action="drag-handle" title="Drag to reorder">
@@ -4805,6 +4805,11 @@ function renderStructuredArrayItem(field, itemConfig, index, itemValue, pluginSt
           </div>
         </div>
         <div class="flex flex-wrap gap-2 text-xs">
+          <button type="button" data-action="toggle-item" class="inline-flex items-center justify-center rounded-md border border-zinc-200 px-2 py-1 text-zinc-600 hover:bg-zinc-100 dark:border-white/10 dark:text-zinc-300 dark:hover:bg-white/10" aria-label="Expand item" title="Expand">
+            <svg class="h-4 w-4 transition-transform rotate-[-90deg] text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" data-item-toggle-icon>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
           <button type="button" data-action="move-up" class="inline-flex items-center justify-center rounded-md border border-zinc-200 px-2 py-1 text-zinc-600 hover:bg-zinc-100 dark:border-white/10 dark:text-zinc-300 dark:hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent dark:disabled:hover:bg-transparent" aria-label="Move item up" title="Move up">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6l-4 4m4-4l4 4m-4-4v12"/>
@@ -4823,7 +4828,7 @@ function renderStructuredArrayItem(field, itemConfig, index, itemValue, pluginSt
           </button>
         </div>
       </div>
-      <div class="mt-4 space-y-4" data-array-item-fields>
+      <div class="mt-4 space-y-4 hidden" data-array-item-fields>
         ${itemFields}
       </div>
     </div>
@@ -4975,8 +4980,8 @@ function renderBlockCard(field, block, discriminator, index, data, pluginStatuse
     `;
   }).join("");
   return `
-    <div class="blocks-item rounded-lg border border-zinc-200 dark:border-white/10 p-4 shadow-lg shadow-zinc-950/20" data-block-type="${escapeHtml2(block.name)}" data-block-discriminator="${escapeHtml2(discriminator)}" draggable="true">
-      <div class="flex flex-col gap-3 pb-2 sm:flex-row sm:items-center sm:justify-between">
+    <div class="blocks-item rounded-lg border border-zinc-200 dark:border-white/10 dark:bg-zinc-600/5 p-4 shadow-lg shadow-zinc-950/20" data-block-type="${escapeHtml2(block.name)}" data-block-discriminator="${escapeHtml2(discriminator)}" draggable="true">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-start gap-3">
           <div class="drag-handle cursor-move text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-400" data-action="drag-handle" title="Drag to reorder">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -5160,6 +5165,18 @@ function getStructuredFieldScript() {
 
               const item = actionButton.closest('.structured-array-item');
               if (!item || !list) return;
+
+              if (action === 'toggle-item') {
+                const content = item.querySelector('[data-array-item-fields]');
+                const icon = actionButton.querySelector('[data-item-toggle-icon]');
+                if (!content) return;
+                const isHidden = content.classList.contains('hidden');
+                content.classList.toggle('hidden', !isHidden);
+                if (icon) {
+                  icon.classList.toggle('rotate-[-90deg]', !isHidden);
+                }
+                return;
+              }
 
               if (action === 'remove-item') {
                 item.remove();
@@ -27808,5 +27825,5 @@ var ROUTES_INFO = {
 };
 
 export { ROUTES_INFO, adminCheckboxRoutes, adminCollectionsRoutes, adminDesignRoutes, adminFormsRoutes, adminLogsRoutes, adminMediaRoutes, adminPluginRoutes, adminSettingsRoutes, admin_api_default, admin_code_examples_default, admin_content_default, admin_testimonials_default, api_content_crud_default, api_default, api_media_default, api_system_default, auth_default, getConfirmationDialogScript2 as getConfirmationDialogScript, public_forms_default, renderConfirmationDialog2 as renderConfirmationDialog, router, router2, test_cleanup_default, userRoutes };
-//# sourceMappingURL=chunk-QTTO3DRB.js.map
-//# sourceMappingURL=chunk-QTTO3DRB.js.map
+//# sourceMappingURL=chunk-43NM3YGT.js.map
+//# sourceMappingURL=chunk-43NM3YGT.js.map
