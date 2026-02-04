@@ -1043,7 +1043,7 @@ function renderStructuredArrayItem(
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"/>
             </svg>
           </div>
-          <div class="text-sm font-semibold text-zinc-900 dark:text-white">
+          <div class="text-sm font-semibold text-zinc-900 dark:text-white cursor-pointer" data-action="toggle-item">
             Item <span class="ml-2 text-xs font-normal text-zinc-500 dark:text-zinc-400" data-array-order-label></span>
           </div>
         </div>
@@ -1315,7 +1315,7 @@ function renderBlockCard(
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"/>
             </svg>
           </div>
-          <div>
+          <div class="cursor-pointer" data-action="toggle-block">
             <div class="text-sm font-semibold text-zinc-900 dark:text-white">
               ${escapeHtml(block.label)}
               <span class="ml-2 text-xs font-normal text-zinc-500 dark:text-zinc-400" data-block-order-label></span>
@@ -1499,7 +1499,7 @@ function getStructuredFieldScript(): string {
 
               if (action === 'toggle-item') {
                 const content = item.querySelector('[data-array-item-fields]');
-                const icon = actionButton.querySelector('[data-item-toggle-icon]');
+                const icon = item.querySelector('[data-item-toggle-icon]');
                 if (!content) return;
                 const isHidden = content.classList.contains('hidden');
                 content.classList.toggle('hidden', !isHidden);
@@ -1704,7 +1704,7 @@ function getBlocksFieldScript(): string {
 
               if (action === 'toggle-block') {
                 const content = item.querySelector('[data-block-content]');
-                const icon = actionButton.querySelector('[data-block-toggle-icon]');
+                const icon = item.querySelector('[data-block-toggle-icon]');
                 if (!content) return;
                 const isHidden = content.classList.contains('hidden');
                 content.classList.toggle('hidden', !isHidden);
