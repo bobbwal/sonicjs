@@ -886,6 +886,12 @@ function renderBlocksField(
     >
       <input type="hidden" id="${fieldId}" name="${fieldName}" value="${escapeHtml(JSON.stringify(blockValues))}">
 
+      <div class="flex items-center justify-between border-b border-zinc-950/5 dark:border-white/10 py-4">
+        <h3 class="text-base/7 font-semibold text-zinc-950 dark:text-white">
+          ${escapeHtml(field.field_label || 'Content Blocks')}
+        </h3>
+      </div>
+
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex-1">
           <select
@@ -948,10 +954,10 @@ function renderStructuredObjectField(
 
   return `
     <div class="field-group rounded-lg shadow-sm mb-6" data-structured-object data-field-name="${escapeHtml(fieldName)}">
-      <div class="field-group-header border-b border-zinc-950/5 dark:border-white/10 pr-6 py-4 cursor-pointer" onclick="toggleFieldGroup('${groupId}')">
+      <div class="field-group-header border-b border-zinc-950/5 dark:border-white/10 pr-6 pb-4 cursor-pointer" onclick="toggleFieldGroup('${groupId}')">
         <h3 class="text-base/7 font-semibold text-zinc-950 dark:text-white flex items-center">
           ${escapeHtml(groupTitle)}
-          <svg id="${groupId}-icon" class="w-5 h-5 ml-2 transform transition-transform ${isCollapsed ? 'rotate-[-90deg]' : ''} text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg id="${groupId}-icon" class="w-5 h-5 ml-2 transform transition-transform ${isCollapsed ? '-rotate-90' : ''} text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
           </svg>
         </h3>
@@ -1049,7 +1055,7 @@ function renderStructuredArrayItem(
         </div>
         <div class="flex flex-wrap gap-2 text-xs">
           <button type="button" data-action="toggle-item" class="inline-flex items-center justify-center rounded-md border border-zinc-200 px-2 py-1 text-zinc-600 hover:bg-zinc-100 dark:border-white/10 dark:text-zinc-300 dark:hover:bg-white/10" aria-label="Expand item" title="Expand">
-            <svg class="h-4 w-4 transition-transform rotate-[-90deg] text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" data-item-toggle-icon>
+            <svg class="h-4 w-4 transition-transform -rotate-90 text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" data-item-toggle-icon>
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
@@ -1325,7 +1331,7 @@ function renderBlockCard(
         </div>
         <div class="flex flex-wrap gap-2 text-xs">
           <button type="button" data-action="toggle-block" class="inline-flex items-center justify-center rounded-md border border-zinc-200 px-2 py-1 text-zinc-600 hover:bg-zinc-100 dark:border-white/10 dark:text-zinc-300 dark:hover:bg-white/10" aria-label="Expand block" title="Expand">
-            <svg class="h-4 w-4 transition-transform rotate-[-90deg] text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" data-block-toggle-icon>
+            <svg class="h-4 w-4 transition-transform -rotate-90 text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" data-block-toggle-icon>
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
@@ -1481,6 +1487,17 @@ function getStructuredFieldScript(): string {
                 const nextIndex = list.querySelectorAll('.structured-array-item').length;
                 const html = template.innerHTML.replace(/__INDEX__/g, String(nextIndex));
                 list.insertAdjacentHTML('beforeend', html);
+                const newItem = list.lastElementChild;
+                if (newItem instanceof HTMLElement) {
+                  const content = newItem.querySelector('[data-array-item-fields]');
+                  const icon = newItem.querySelector('[data-item-toggle-icon]');
+                  if (content instanceof HTMLElement) {
+                    content.classList.remove('hidden');
+                  }
+                  if (icon instanceof Element) {
+                    icon.classList.remove('-rotate-90');
+                  }
+                }
                 if (typeof initializeTinyMCE === 'function') {
                   initializeTinyMCE();
                 }
@@ -1504,7 +1521,7 @@ function getStructuredFieldScript(): string {
                 const isHidden = content.classList.contains('hidden');
                 content.classList.toggle('hidden', !isHidden);
                 if (icon) {
-                  icon.classList.toggle('rotate-[-90deg]', !isHidden);
+                  icon.classList.toggle('-rotate-90', !isHidden);
                 }
                 return;
               }
@@ -1688,6 +1705,17 @@ function getBlocksFieldScript(): string {
                 const nextIndex = list.querySelectorAll('.blocks-item').length;
                 const html = template.innerHTML.replace(/__INDEX__/g, String(nextIndex));
                 list.insertAdjacentHTML('beforeend', html);
+                const newItem = list.lastElementChild;
+                if (newItem instanceof HTMLElement) {
+                  const content = newItem.querySelector('[data-block-content]');
+                  const icon = newItem.querySelector('[data-block-toggle-icon]');
+                  if (content instanceof HTMLElement) {
+                    content.classList.remove('hidden');
+                  }
+                  if (icon instanceof Element) {
+                    icon.classList.remove('-rotate-90');
+                  }
+                }
                 if (typeSelect) {
                   typeSelect.value = '';
                 }
@@ -1709,7 +1737,7 @@ function getBlocksFieldScript(): string {
                 const isHidden = content.classList.contains('hidden');
                 content.classList.toggle('hidden', !isHidden);
                 if (icon) {
-                  icon.classList.toggle('rotate-[-90deg]', !isHidden);
+                  icon.classList.toggle('-rotate-90', !isHidden);
                 }
                 return;
               }
