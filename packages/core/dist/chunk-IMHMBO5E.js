@@ -1,7 +1,7 @@
 import { getCacheService, CACHE_CONFIGS, getLogger, SettingsService } from './chunk-G44QUVNM.js';
-import { requireAuth, isPluginActive, requireRole, AuthManager, logActivity } from './chunk-22ITDOWS.js';
+import { requireAuth, isPluginActive, requireRole, AuthManager, logActivity } from './chunk-ZNLLGMNS.js';
 import { PluginService } from './chunk-YFJJU26H.js';
-import { MigrationService } from './chunk-WKRWJ5DN.js';
+import { MigrationService } from './chunk-LQLJUBNR.js';
 import { init_admin_layout_catalyst_template, renderDesignPage, renderCheckboxPage, renderTestimonialsList, renderCodeExamplesList, renderAlert, renderTable, renderPagination, renderConfirmationDialog, getConfirmationDialogScript, renderAdminLayoutCatalyst, renderAdminLayout, adminLayoutV2, renderForm } from './chunk-VCH6HXVP.js';
 import { PluginBuilder, TurnstileService } from './chunk-J5WGMRSU.js';
 import { QueryFilterBuilder, sanitizeInput, getCoreVersion, escapeHtml, getBlocksFieldConfig, parseBlocksValue } from './chunk-34QIAULP.js';
@@ -2231,7 +2231,7 @@ adminApiRoutes.delete("/collections/:id", async (c) => {
 });
 adminApiRoutes.get("/migrations/status", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-QTKUFARR.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-UHPN3KGI.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const status = await migrationService.getMigrationStatus();
@@ -2256,7 +2256,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
         error: "Unauthorized. Admin access required."
       }, 403);
     }
-    const { MigrationService: MigrationService2 } = await import('./migrations-QTKUFARR.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-UHPN3KGI.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const result = await migrationService.runPendingMigrations();
@@ -2275,7 +2275,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
 });
 adminApiRoutes.get("/migrations/validate", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-QTKUFARR.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-UHPN3KGI.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const validation = await migrationService.validateSchema();
@@ -21558,6 +21558,7 @@ function renderCollectionFormPage(data) {
                 <option value="number">Number</option>
                 <option value="boolean">Boolean</option>
                 <option value="date">Date</option>
+                <option value="radio">Radio</option>
                 <option value="select">Select</option>
                 <option value="media">Media</option>
                 <option value="reference">Reference</option>
@@ -21885,13 +21886,16 @@ function renderCollectionFormPage(data) {
 
         console.log('[Edit Field] Showing options for field type:', fieldType, '(original:', field.field_type, ')');
 
-        if (['select', 'media', 'richtext', 'reference'].includes(fieldType)) {
+        if (['select', 'radio', 'media', 'richtext', 'reference'].includes(fieldType)) {
           optionsContainer.classList.remove('hidden');
 
           // Set help text based on type
           switch (fieldType) {
             case 'select':
               helpText.textContent = 'Create a dropdown select field with custom options';
+              break;
+            case 'radio':
+              helpText.textContent = 'Single selection from a list of radio options';
               break;
             case 'media':
               helpText.textContent = 'Upload and manage media files (images, videos, documents)';
@@ -22039,7 +22043,7 @@ function renderCollectionFormPage(data) {
         const fieldNameInput = document.getElementById('modal-field-name');
 
         // Show/hide options based on field type
-        if (['select', 'media', 'richtext', 'guid', 'reference'].includes(this.value)) {
+        if (['select', 'radio', 'media', 'richtext', 'guid', 'reference'].includes(this.value)) {
           optionsContainer.classList.remove('hidden');
 
           // Set default options and help text based on type
@@ -22047,6 +22051,10 @@ function renderCollectionFormPage(data) {
             case 'select':
               fieldOptions.value = '{"options": ["Option 1", "Option 2"], "multiple": false}';
               helpText.textContent = 'Create a dropdown select field with custom options';
+              break;
+            case 'radio':
+              fieldOptions.value = '{"enum": ["Option 1", "Option 2"], "enumLabels": ["Option 1", "Option 2"], "default": "Option 1", "inline": false}';
+              helpText.textContent = 'Single selection from a list of radio options';
               break;
             case 'media':
               fieldOptions.value = '{"accept": "image/*", "maxSize": "10MB"}';
@@ -22622,6 +22630,11 @@ adminCollectionsRoutes.post("/:id/fields", async (c) => {
         fieldConfig.format = "date-time";
       } else if (fieldType === "select") {
         fieldConfig.enum = parsedOptions.options || [];
+      } else if (fieldType === "radio") {
+        fieldConfig.type = "radio";
+        if (!parsedOptions.enum && parsedOptions.options) {
+          fieldConfig.enum = parsedOptions.options;
+        }
       } else if (fieldType === "media") {
         fieldConfig.format = "media";
       } else if (fieldType === "slug") {
@@ -27796,5 +27809,5 @@ var ROUTES_INFO = {
 };
 
 export { ROUTES_INFO, adminCheckboxRoutes, adminCollectionsRoutes, adminDesignRoutes, adminFormsRoutes, adminLogsRoutes, adminMediaRoutes, adminPluginRoutes, adminSettingsRoutes, admin_api_default, admin_code_examples_default, admin_content_default, admin_testimonials_default, api_content_crud_default, api_default, api_media_default, api_system_default, auth_default, getConfirmationDialogScript2 as getConfirmationDialogScript, public_forms_default, renderConfirmationDialog2 as renderConfirmationDialog, router, router2, test_cleanup_default, userRoutes };
-//# sourceMappingURL=chunk-MLJIRV4Y.js.map
-//# sourceMappingURL=chunk-MLJIRV4Y.js.map
+//# sourceMappingURL=chunk-IMHMBO5E.js.map
+//# sourceMappingURL=chunk-IMHMBO5E.js.map
