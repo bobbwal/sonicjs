@@ -1,10 +1,10 @@
-import { getCacheService, CACHE_CONFIGS, getLogger, SettingsService } from './chunk-5PH7K7YR.js';
-import { requireAuth, isPluginActive, requireRole, AuthManager, logActivity } from './chunk-FQAOOSEB.js';
+import { getCacheService, CACHE_CONFIGS, getLogger, SettingsService } from './chunk-G44QUVNM.js';
+import { requireAuth, isPluginActive, requireRole, AuthManager, logActivity } from './chunk-22ITDOWS.js';
 import { PluginService } from './chunk-YFJJU26H.js';
-import { MigrationService } from './chunk-DADFCDML.js';
+import { MigrationService } from './chunk-WKRWJ5DN.js';
 import { init_admin_layout_catalyst_template, renderDesignPage, renderCheckboxPage, renderTestimonialsList, renderCodeExamplesList, renderAlert, renderTable, renderPagination, renderConfirmationDialog, getConfirmationDialogScript, renderAdminLayoutCatalyst, renderAdminLayout, adminLayoutV2, renderForm } from './chunk-VCH6HXVP.js';
 import { PluginBuilder, TurnstileService } from './chunk-J5WGMRSU.js';
-import { QueryFilterBuilder, sanitizeInput, getCoreVersion, escapeHtml, getBlocksFieldConfig, parseBlocksValue } from './chunk-PSRPBW3W.js';
+import { QueryFilterBuilder, sanitizeInput, getCoreVersion, escapeHtml, getBlocksFieldConfig, parseBlocksValue } from './chunk-34QIAULP.js';
 import { metricsTracker } from './chunk-FICTAGD4.js';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
@@ -2231,7 +2231,7 @@ adminApiRoutes.delete("/collections/:id", async (c) => {
 });
 adminApiRoutes.get("/migrations/status", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-WJVCIKQO.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-QTKUFARR.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const status = await migrationService.getMigrationStatus();
@@ -2256,7 +2256,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
         error: "Unauthorized. Admin access required."
       }, 403);
     }
-    const { MigrationService: MigrationService2 } = await import('./migrations-WJVCIKQO.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-QTKUFARR.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const result = await migrationService.runPendingMigrations();
@@ -2275,7 +2275,7 @@ adminApiRoutes.post("/migrations/run", async (c) => {
 });
 adminApiRoutes.get("/migrations/validate", async (c) => {
   try {
-    const { MigrationService: MigrationService2 } = await import('./migrations-WJVCIKQO.js');
+    const { MigrationService: MigrationService2 } = await import('./migrations-QTKUFARR.js');
     const db = c.env.DB;
     const migrationService = new MigrationService2(db);
     const validation = await migrationService.validateSchema();
@@ -3956,6 +3956,7 @@ function getReadFieldValueScript() {
           const textarea = fieldWrapper.querySelector('textarea');
           const inputs = Array.from(fieldWrapper.querySelectorAll('input'));
           const checkbox = inputs.find((input) => input.type === 'checkbox');
+          const checkedRadio = inputs.find((input) => input.type === 'radio' && input.checked);
           const nonHiddenInput = inputs.find((input) => input.type !== 'hidden' && input.type !== 'checkbox');
           const hiddenInput = inputs.find((input) => input.type === 'hidden');
 
@@ -3976,6 +3977,10 @@ function getReadFieldValueScript() {
 
           if (fieldType === 'boolean' && checkbox) {
             return checkbox.checked;
+          }
+
+          if (fieldType === 'radio') {
+            return checkedRadio ? checkedRadio.value : '';
           }
 
           if (select) {
@@ -4457,6 +4462,39 @@ function renderDynamicField(field, options = {}) {
             >
           </div>
         ` : ""}
+      `;
+      break;
+    case "radio":
+      const radioOptions = opts.options || (Array.isArray(opts.enum) ? opts.enum.map((optionValue, index) => ({
+        value: optionValue,
+        label: opts.enumLabels?.[index] || optionValue
+      })) : []);
+      const selectedRadioValue = value !== void 0 && value !== null ? String(value) : opts.default ? String(opts.default) : "";
+      const isInline = opts.inline === true;
+      fieldHTML = `
+        <div class="${isInline ? "flex flex-wrap gap-4" : "space-y-3"}">
+          ${radioOptions.map((option, index) => {
+        const optionValue = typeof option === "string" ? option : option.value;
+        const optionLabel = typeof option === "string" ? option : option.label;
+        const inputId = `${fieldId}-option-${index}`;
+        const checked2 = selectedRadioValue === String(optionValue) ? "checked" : "";
+        return `
+                <label for="${inputId}" class="flex items-center gap-3 text-sm text-zinc-700 dark:text-zinc-300">
+                  <input
+                    type="radio"
+                    id="${inputId}"
+                    name="${fieldName}"
+                    value="${escapeHtml2(optionValue)}"
+                    class="h-4 w-4 text-zinc-900 focus:ring-zinc-400 dark:text-white dark:focus:ring-white"
+                    ${checked2}
+                    ${required}
+                    ${disabled ? "disabled" : ""}
+                  >
+                  <span>${escapeHtml2(optionLabel)}</span>
+                </label>
+              `;
+      }).join("")}
+        </div>
       `;
       break;
     case "reference":
@@ -27758,5 +27796,5 @@ var ROUTES_INFO = {
 };
 
 export { ROUTES_INFO, adminCheckboxRoutes, adminCollectionsRoutes, adminDesignRoutes, adminFormsRoutes, adminLogsRoutes, adminMediaRoutes, adminPluginRoutes, adminSettingsRoutes, admin_api_default, admin_code_examples_default, admin_content_default, admin_testimonials_default, api_content_crud_default, api_default, api_media_default, api_system_default, auth_default, getConfirmationDialogScript2 as getConfirmationDialogScript, public_forms_default, renderConfirmationDialog2 as renderConfirmationDialog, router, router2, test_cleanup_default, userRoutes };
-//# sourceMappingURL=chunk-7DU5PUKL.js.map
-//# sourceMappingURL=chunk-7DU5PUKL.js.map
+//# sourceMappingURL=chunk-MLJIRV4Y.js.map
+//# sourceMappingURL=chunk-MLJIRV4Y.js.map
