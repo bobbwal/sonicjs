@@ -1,88 +1,62 @@
 import { test, expect } from '@playwright/test';
-import { loginAsAdmin, ensureAdminUserExists, createTestCollection, deleteTestCollection } from './utils/test-helpers';
+import { loginAsAdmin, ensureAdminUserExists } from './utils/test-helpers';
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:8787';
 
 test.describe('Radio Field', () => {
-  test('should save radio selection in content form', async ({ page }) => {
-    const collectionName = `radio_test_${Date.now()}`;
-    const collectionData = {
-      name: collectionName,
-      displayName: 'Radio Test',
-      description: 'Collection for radio field E2E test'
-    };
-
+  test('should save hero height radio selection in page blocks', async ({ page }) => {
+    let createdContentId: string | null = null;
     await ensureAdminUserExists(page);
     await loginAsAdmin(page);
 
-    await createTestCollection(page, collectionData);
-
-    // Open collection edit page
-    await page.goto(`${BASE_URL}/admin/collections`);
-    const collectionRow = page.locator('tr').filter({ hasText: collectionName });
-    await expect(collectionRow).toBeVisible();
-    await collectionRow.click();
-    await expect(page.locator('h1')).toContainText('Edit Collection');
-    const collectionPath = new URL(page.url()).pathname;
-    const collectionId = collectionPath.split('/').filter(Boolean).pop() || collectionName;
-
-    // Add a radio field
-    await page.click('button:has-text("Add Field")');
-    await page.waitForSelector('#field-modal:not(.hidden)');
-
-    await page.fill('#modal-field-name', 'priority');
-    await page.selectOption('#field-type', 'radio');
-    await page.fill('#field-label', 'Priority');
-
-    await expect(page.locator('#field-options-container')).not.toHaveClass(/hidden/);
-
-    const optionsJson = JSON.stringify({
-      enum: ['low', 'medium', 'high'],
-      enumLabels: ['Low', 'Medium', 'High'],
-      default: 'medium',
-      inline: true
-    });
-    await page.fill('#field-options', optionsJson);
-
-    await page.click('#field-modal button[type="submit"]');
-    const newField = page.locator('.field-item').filter({ hasText: 'priority' });
-    await expect(newField).toBeVisible({ timeout: 10000 });
-
-    // Create content using the new collection
-    await page.goto(`${BASE_URL}/admin/content/new?collection=${collectionId}`);
+    // Use shipped Page Blocks collection via chooser for env-independent collection IDs.
+    await page.goto(`${BASE_URL}/admin/content/new`);
+    const pageBlocksLink = page.locator('a[href^="/admin/content/new?collection="]').filter({ hasText: 'Page Blocks' });
+    const hasPageBlocks = await pageBlocksLink.isVisible().catch(() => false);
+    if (!hasPageBlocks) {
+      test.skip(true, 'Page Blocks collection not available');
+      return;
+    }
+    await pageBlocksLink.click();
     await page.waitForSelector('form#content-form');
 
     const title = `Radio Content ${Date.now()}`;
-    const titleInput = page.locator('input[name="title"]');
-    if (await titleInput.count()) {
-      await titleInput.fill(title);
-      const slugInput = page.locator('input[name="slug"]');
-      if (await slugInput.count()) {
-        await slugInput.fill(`radio-content-${Date.now()}`);
-      }
-    }
+    await page.fill('input[name="title"]', title);
+    await page.fill('input[name="slug"]', `radio-content-${Date.now()}`);
 
-    const radioHigh = page.locator('input[name="priority"][value="high"]');
-    await expect(radioHigh).toBeVisible({ timeout: 10000 });
-    await radioHigh.check();
+    const blocksField = page.locator('[data-field-name="body"]');
+    await expect(blocksField).toBeVisible();
+    await blocksField.locator('[data-role="block-type-select"]').selectOption('hero');
+    await blocksField.locator('[data-action="add-block"]').click();
+
+    const firstBlock = blocksField.locator('.blocks-item').first();
+    await firstBlock.locator('[data-block-field="heading"] input').fill('Radio persistence hero');
+
+    const radioFull = firstBlock.locator('[data-block-field="height"] input[value="full"]');
+    await expect(radioFull).toBeVisible({ timeout: 10000 });
+    await radioFull.check();
 
     await page.click('button[name="action"][value="save_and_publish"]');
-    await page.waitForTimeout(2000);
+    await page.waitForURL(/\/admin\/content\/[^/]+\/edit|\/admin\/content\?/, { timeout: 15000 });
 
-    await page.goto(`${BASE_URL}/admin/content?collection=${collectionId}`);
-    const contentLink = page.locator(`a:has-text("${title}")`).first();
-    if (await contentLink.count()) {
-      await expect(contentLink).toBeVisible({ timeout: 10000 });
-      await contentLink.click();
+    const editUrlMatch = page.url().match(/\/admin\/content\/([^/]+)\/edit/);
+    if (editUrlMatch?.[1]) {
+      createdContentId = editUrlMatch[1];
     } else {
-      // Fallback: open the first row if title isn't shown for this collection
-      const firstRowLink = page.locator('tbody a[href*="/admin/content/"]').first();
-      await expect(firstRowLink).toBeVisible({ timeout: 10000 });
-      await firstRowLink.click();
+      await page.goto(`${BASE_URL}/admin/content?collection=page_blocks`);
+      const contentLink = page.locator(`a:has-text("${title}")`).first();
+      await expect(contentLink).toBeVisible({ timeout: 10000 });
+      const href = await contentLink.getAttribute('href');
+      const match = href?.match(/\/admin\/content\/([^/]+)\/edit/);
+      createdContentId = match?.[1] || null;
+      await contentLink.click();
     }
 
-    await expect(page.locator('input[name="priority"][value="high"]')).toBeChecked();
+    await expect(page.locator('[data-block-field="height"] input[value="full"]').first()).toBeChecked();
 
-    await deleteTestCollection(page, collectionName);
+    if (createdContentId) {
+      const deleteResponse = await page.request.delete(`/admin/content/${createdContentId}`);
+      expect(deleteResponse.ok()).toBeTruthy();
+    }
   });
 });
