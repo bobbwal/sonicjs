@@ -1,5 +1,74 @@
 import type { CollectionConfig } from '@sonicjs-cms/core'
 
+const heroBlock = {
+  label: 'Hero',
+  properties: {
+    heading: { type: 'string', title: 'Heading', required: true },
+    subheading: { type: 'textarea', title: 'Subheading', maxLength: 600 },
+    image: { type: 'media', title: 'Background/Image' },
+    imageAlt: { type: 'string', title: 'Image Alt' },
+
+    ctaPrimary: {
+      title: 'Primary CTA',
+      type: 'object',
+      properties: {
+        label: { type: 'string', title: 'Label' },
+        link: {
+          title: 'Link',
+          type: 'object',
+          properties: {
+            mode: {
+              type: 'select',
+              title: 'Link type',
+              enum: ['none', 'internal', 'external'],
+              enumLabels: ['None', 'Internal', 'External'],
+              default: 'none',
+            },
+            reference: { type: 'reference', title: 'Internal reference', collection: 'pages' },
+            url: { type: 'url', title: 'External URL' },
+          },
+        },
+        style: {
+          type: 'select',
+          title: 'Button style',
+          enum: ['primary', 'secondary'],
+          enumLabels: ['Primary', 'Secondary'],
+          default: 'primary',
+        },
+      },
+    },
+    ctaSecondary: {
+      title: 'Secondary CTA',
+      type: 'object',
+      properties: {
+        label: { type: 'string', title: 'Label' },
+        link: {
+          title: 'Link',
+          type: 'object',
+          properties: {
+            mode: {
+              type: 'select',
+              title: 'Type',
+              enum: ['none', 'internal', 'external'],
+              enumLabels: ['None', 'Internal', 'External'],
+              default: 'none',
+            },
+            reference: { type: 'reference', title: 'Internal reference', collection: 'pages' },
+            url: { type: 'url', title: 'External URL' },
+          },
+        },
+        style: {
+          type: 'select',
+          title: 'Button style',
+          enum: ['primary', 'secondary'],
+          enumLabels: ['Primary', 'Secondary'],
+          default: 'primary',
+        },
+      },
+    },
+  },
+}
+
 const pageBlocksCollection: CollectionConfig = {
   name: 'page_blocks',
   displayName: 'Page Blocks',
@@ -60,6 +129,7 @@ const pageBlocksCollection: CollectionConfig = {
           type: 'object',
           discriminator: 'blockType',
           blocks: {
+            hero: heroBlock,
             text: {
               label: 'Text',
               properties: {
