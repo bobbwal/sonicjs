@@ -1527,8 +1527,15 @@ function getStructuredFieldScript(): string {
               }
 
               if (action === 'remove-item') {
-                item.remove();
-                updateHiddenInput();
+                if (typeof requestRepeaterDelete === 'function') {
+                  requestRepeaterDelete(() => {
+                    item.remove();
+                    updateHiddenInput();
+                  });
+                } else {
+                  item.remove();
+                  updateHiddenInput();
+                }
                 return;
               }
 
