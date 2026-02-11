@@ -1,8 +1,8 @@
 echo "Running linting..."
-npm run lint --workspace=@sonicjs-cms/core
+npm run lint --workspace=packages/core
 
 echo "Running type checks..."
-npm run type-check
+npm run type-check --workspace=packages/core
 
 echo "Running unit tests..."
-npm test
+npm run test --workspace=packages/core
