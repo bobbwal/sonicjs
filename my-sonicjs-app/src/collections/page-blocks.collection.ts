@@ -4,6 +4,14 @@ const heroBlock = {
   label: 'Hero',
   properties: {
     heading: { type: 'string', title: 'Heading', required: true },
+    height: {
+      type: 'radio',
+      title: 'Height',
+      enum: ['small', 'medium', 'full'],
+      enumLabels: ['Small', 'Medium', 'Full'],
+      default: 'medium',
+      inline: true,
+    },
     subheading: { type: 'textarea', title: 'Subheading', maxLength: 600 },
     image: { type: 'media', title: 'Background/Image' },
     imageAlt: { type: 'string', title: 'Image Alt' },
@@ -12,11 +20,7 @@ const heroBlock = {
       title: 'Primary CTA',
       type: 'object',
       properties: {
-<<<<<<< HEAD
-        label: { type: 'string', title: 'Label' },
-=======
         label: { type: 'string', title: 'Label', required: true },
->>>>>>> fix/structured-object-serialization
         link: {
           title: 'Link',
           type: 'object',

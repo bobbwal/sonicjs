@@ -36,12 +36,12 @@ All field types support these common properties:
 
 ```typescript
 interface FieldConfig {
-  type: FieldType           // Required: The field type
-  title?: string            // Display label
-  description?: string      // Help text shown below field
-  required?: boolean        // Is the field required (default: false)
-  default?: any            // Default value
-  placeholder?: string      // Placeholder text
+  type: FieldType // Required: The field type
+  title?: string // Display label
+  description?: string // Help text shown below field
+  required?: boolean // Is the field required (default: false)
+  default?: any // Default value
+  placeholder?: string // Placeholder text
 }
 ```
 
@@ -130,6 +130,7 @@ URL-friendly identifier with auto-generation and uniqueness checking.
 </CodeGroup>
 
 **Features:**
+
 - Auto-generates from title field
 - Validates format (lowercase, numbers, hyphens only)
 - Checks for duplicates in collection
@@ -372,7 +373,8 @@ Radio button group for single selection.
   title: 'Priority',
   enum: ['low', 'medium', 'high'],
   enumLabels: ['Low', 'Medium', 'High'],
-  default: 'medium'
+  default: 'medium',
+  inline: true // Optional, defaults to stacked radios
 }
 ```
 
@@ -411,6 +413,7 @@ File upload with preview for images, videos, and documents.
 | `autoUpload` | boolean | Upload immediately on selection |
 
 **Common MIME Types:**
+
 - Images: `image/jpeg`, `image/png`, `image/gif`, `image/webp`, `image/svg+xml`
 - Videos: `video/mp4`, `video/webm`
 - Documents: `application/pdf`, `application/msword`
@@ -469,9 +472,7 @@ WYSIWYG editor for formatted content.
 
 **Storage:** `TEXT` (HTML)
 
-<Note>
-Falls back to textarea if no rich text editor plugin is active.
-</Note>
+<Note>Falls back to textarea if no rich text editor plugin is active.</Note>
 
 ---
 
@@ -502,6 +503,7 @@ Quill editor (requires Quill Editor Plugin).
 | `toolbar` | string | `'full'`, `'simple'`, or `'minimal'` |
 
 **Toolbar Presets:**
+
 - `full`: Headers, formatting, colors, lists, links, images
 - `simple`: Bold, italic, underline, lists, links
 - `minimal`: Bold, italic, links
@@ -630,6 +632,7 @@ Repeatable list of items.
 </CodeGroup>
 
 **Features:**
+
 - Add/remove items
 - Drag-to-reorder
 - Move up/down buttons
@@ -700,6 +703,7 @@ Discriminated union for flexible content blocks (page builders).
 | `properties` | object | Field definitions for this block |
 
 **Features:**
+
 - Block type selector dropdown
 - Add any block type
 - Reorder blocks
@@ -788,32 +792,32 @@ export default defineCollection({
       type: 'string',
       title: 'Title',
       required: true,
-      maxLength: 200
+      maxLength: 200,
     },
     slug: {
       type: 'slug',
       title: 'URL Slug',
-      required: true
+      required: true,
     },
     excerpt: {
       type: 'textarea',
       title: 'Excerpt',
       maxLength: 300,
-      description: 'Short summary for listings'
+      description: 'Short summary for listings',
     },
 
     // Rich content
     content: {
       type: 'richtext',
       title: 'Content',
-      required: true
+      required: true,
     },
 
     // Media
     featuredImage: {
       type: 'media',
       title: 'Featured Image',
-      allowedTypes: ['image/*']
+      allowedTypes: ['image/*'],
     },
 
     // Selection
@@ -822,25 +826,25 @@ export default defineCollection({
       title: 'Status',
       enum: ['draft', 'published', 'archived'],
       enumLabels: ['Draft', 'Published', 'Archived'],
-      default: 'draft'
+      default: 'draft',
     },
     category: {
       type: 'select',
       title: 'Category',
       enum: ['news', 'tutorial', 'announcement'],
-      enumLabels: ['News', 'Tutorial', 'Announcement']
+      enumLabels: ['News', 'Tutorial', 'Announcement'],
     },
     tags: {
       type: 'select',
       title: 'Tags',
       multiple: true,
-      enum: ['javascript', 'react', 'nodejs', 'cloudflare']
+      enum: ['javascript', 'react', 'nodejs', 'cloudflare'],
     },
 
     // Date
     publishedAt: {
       type: 'datetime',
-      title: 'Publish Date'
+      title: 'Publish Date',
     },
 
     // Boolean
@@ -848,7 +852,7 @@ export default defineCollection({
       type: 'boolean',
       title: 'Featured',
       checkboxLabel: 'Show on homepage',
-      default: false
+      default: false,
     },
 
     // Reference
@@ -856,7 +860,7 @@ export default defineCollection({
       type: 'reference',
       title: 'Author',
       collection: 'users',
-      required: true
+      required: true,
     },
 
     // Structured
@@ -865,8 +869,8 @@ export default defineCollection({
       title: 'SEO',
       properties: {
         metaTitle: { type: 'string', title: 'Meta Title' },
-        metaDescription: { type: 'textarea', title: 'Meta Description' }
-      }
+        metaDescription: { type: 'textarea', title: 'Meta Description' },
+      },
     },
 
     // Array
@@ -875,10 +879,10 @@ export default defineCollection({
       title: 'Related Posts',
       items: {
         type: 'reference',
-        collection: 'blog_posts'
-      }
-    }
-  }
+        collection: 'blog_posts',
+      },
+    },
+  },
 })
 ```
 
@@ -886,20 +890,20 @@ export default defineCollection({
 
 ### Validation Summary
 
-| Field Type | Client Validation | Server Validation |
-|------------|-------------------|-------------------|
-| string | HTML5 + pattern | Zod schema |
-| textarea | HTML5 + maxLength | Zod schema |
-| slug | Format + uniqueness API | Uniqueness check |
-| number | HTML5 min/max/step | Zod schema |
-| boolean | - | Zod schema |
-| date/datetime | HTML5 min/max | Zod schema |
-| select | Valid option check | Enum validation |
-| media | File type/size | MIME validation |
-| richtext | - | HTML sanitization |
-| object | Nested validation | Zod schema |
-| array | Item validation | Zod schema |
-| reference | - | Exists check |
+| Field Type    | Client Validation       | Server Validation |
+| ------------- | ----------------------- | ----------------- |
+| string        | HTML5 + pattern         | Zod schema        |
+| textarea      | HTML5 + maxLength       | Zod schema        |
+| slug          | Format + uniqueness API | Uniqueness check  |
+| number        | HTML5 min/max/step      | Zod schema        |
+| boolean       | -                       | Zod schema        |
+| date/datetime | HTML5 min/max           | Zod schema        |
+| select        | Valid option check      | Enum validation   |
+| media         | File type/size          | MIME validation   |
+| richtext      | -                       | HTML sanitization |
+| object        | Nested validation       | Zod schema        |
+| array         | Item validation         | Zod schema        |
+| reference     | -                       | Exists check      |
 
 ---
 
