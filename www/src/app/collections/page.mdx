@@ -546,6 +546,7 @@ Use objects to group related fields under a single heading.
 seo: {
   type: 'object',
   title: 'SEO',
+  collapsed: false,
   properties: {
     title: { type: 'string', title: 'SEO title' },
     description: { type: 'textarea', title: 'SEO description' },
@@ -554,6 +555,8 @@ seo: {
 ```
 
 </CodeGroup>
+
+By default, object groups render collapsed in the admin UI. Set `collapsed: false` to expand them on load.
 
 ---
 

@@ -438,10 +438,10 @@ export function renderContentFormPage(data: ContentFormData): string {
         
         if (content.classList.contains('hidden')) {
           content.classList.remove('hidden');
-          icon.classList.remove('rotate-[-90deg]');
+          icon.classList.remove('-rotate-90');
         } else {
           content.classList.add('hidden');
-          icon.classList.add('rotate-[-90deg]');
+          icon.classList.add('-rotate-90');
         }
       }
 
