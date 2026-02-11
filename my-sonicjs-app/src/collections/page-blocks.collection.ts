@@ -12,7 +12,11 @@ const heroBlock = {
       title: 'Primary CTA',
       type: 'object',
       properties: {
+<<<<<<< HEAD
         label: { type: 'string', title: 'Label' },
+=======
+        label: { type: 'string', title: 'Label', required: true },
+>>>>>>> fix/structured-object-serialization
         link: {
           title: 'Link',
           type: 'object',

@@ -19,7 +19,50 @@ function getReadFieldValueScript(): string {
           const nonHiddenInput = inputs.find((input) => input.type !== 'hidden' && input.type !== 'checkbox');
           const hiddenInput = inputs.find((input) => input.type === 'hidden');
 
+          const readStructuredFieldsHost = (host) => {
+            const fields = Array.from(host.querySelectorAll(':scope > .structured-subfield'));
+            if (fields.length === 1 && fields[0].dataset.structuredField === '__value') {
+              return window.sonicReadFieldValue(fields[0]);
+            }
+            return fields.reduce((acc, subfield) => {
+              const fieldName = subfield.dataset.structuredField;
+              if (!fieldName || fieldName === '__value') return acc;
+              acc[fieldName] = window.sonicReadFieldValue(subfield);
+              return acc;
+            }, {});
+          };
+
+          const readStructuredObject = () => {
+            const objectContainer = fieldWrapper.querySelector('[data-structured-object]');
+            if (!objectContainer) return null;
+            const host =
+              objectContainer.querySelector(':scope > [data-structured-object-fields]') ||
+              objectContainer.querySelector('[data-structured-object-fields]') ||
+              objectContainer;
+            return readStructuredFieldsHost(host);
+          };
+
+          const readStructuredArray = () => {
+            const arrayContainer = fieldWrapper.querySelector('[data-structured-array]');
+            if (!arrayContainer) return null;
+            const list = arrayContainer.querySelector('[data-structured-array-list]');
+            if (!list) return [];
+            const items = Array.from(list.querySelectorAll(':scope > .structured-array-item'));
+            return items.map((item) => {
+              const host =
+                item.querySelector(':scope > [data-array-item-fields]') ||
+                item.querySelector('[data-array-item-fields]') ||
+                item;
+              return readStructuredFieldsHost(host);
+            });
+          };
+
           if (fieldType === 'object' || fieldType === 'array') {
+            const liveValue = fieldType === 'array' ? readStructuredArray() : readStructuredObject();
+            if (liveValue !== null) {
+              return liveValue;
+            }
+
             if (!hiddenInput) {
               return fieldType === 'array' ? [] : {};
             }
@@ -1393,7 +1436,15 @@ function getStructuredFieldScript(): string {
           const readFieldValue = window.sonicReadFieldValue;
 
           const readStructuredValue = (container) => {
-            const fields = Array.from(container.querySelectorAll('.structured-subfield'));
+            // Read only the current level's direct subfields from the closest
+            // structured host. This avoids flattening nested object/array values
+            // while still working if wrappers are introduced around the host.
+            const fieldHost = container.querySelector(
+              '[data-structured-object-fields], [data-array-item-fields]'
+            ) || container;
+            const fields = Array.from(
+              fieldHost.querySelectorAll(':scope > .structured-subfield')
+            );
             if (fields.length === 1 && fields[0].dataset.structuredField === '__value') {
               return readFieldValue(fields[0]);
             }
