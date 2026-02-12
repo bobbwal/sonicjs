@@ -546,6 +546,7 @@ Use objects to group related fields under a single heading.
 seo: {
   type: 'object',
   title: 'SEO',
+  objectLayout: 'nested', // 'nested' (default) or 'flat'
   collapsed: false,
   properties: {
     title: { type: 'string', title: 'SEO title' },
@@ -556,7 +557,7 @@ seo: {
 
 </CodeGroup>
 
-By default, object groups render collapsed in the admin UI. Set `collapsed: false` to expand them on load.
+By default, object groups use `objectLayout: 'nested'` and render collapsed in the admin UI. Set `collapsed: false` to expand them on load. If you use `objectLayout: 'flat'`, `collapsed` is ignored.
 
 ---
 

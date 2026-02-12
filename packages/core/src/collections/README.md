@@ -122,6 +122,9 @@ Each field can have:
 
 - `items`: Schema for array items
 - `properties`: Schema for object properties
+- `objectLayout`: Object field layout mode: `'nested'` (default) or `'flat'`
+- `collapsed`: For nested object layout, initial state (default: `true`; set `false` to start open)
+- Note: `collapsed` is ignored when `objectLayout` is `'flat'`
 
 ## Testing Collections
 
