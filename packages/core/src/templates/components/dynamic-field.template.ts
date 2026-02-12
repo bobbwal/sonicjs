@@ -934,6 +934,8 @@ function renderStructuredObjectField(
   const fieldId = `field-${field.field_name}`
   const fieldName = field.field_name
   const objectValue = normalizeStructuredObjectValue(value)
+  const objectLayout = opts.objectLayout || 'nested'
+  const useNestedLayout = objectLayout !== 'flat'
 
   const subfields = Object.entries(properties)
     .map(([propertyName, propertyConfig]) =>
@@ -949,6 +951,24 @@ function renderStructuredObjectField(
     .join('')
 
   const groupTitle = field.field_label || field.field_name
+
+  if (!useNestedLayout) {
+    return `
+      <div class="space-y-4" data-structured-object data-field-name="${escapeHtml(fieldName)}">
+        <input type="hidden" id="${fieldId}" name="${fieldName}" value="${escapeHtml(JSON.stringify(objectValue))}">
+        <div class="flex items-center justify-between border-b border-zinc-950/5 dark:border-white/10 py-4 first-of-type:pt-0">
+          <h3 class="text-base/7 font-semibold text-zinc-950 dark:text-white">
+            ${escapeHtml(groupTitle)}
+          </h3>
+        </div>
+        <div class="space-y-4" data-structured-object-fields>
+          ${subfields}
+        </div>
+      </div>
+      ${getStructuredFieldScript()}
+    `
+  }
+
   const groupId = `object-${field.field_name}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
   const isCollapsed = opts.collapsed !== false
 
