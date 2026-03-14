@@ -188,19 +188,30 @@ export interface FieldRenderOptions {
   contentId?: string
 }
 
-export function renderDynamicField(
-  field: FieldDefinition,
-  options: FieldRenderOptions = {},
-): string {
-  const {
-    value = '',
-    errors = [],
-    disabled = false,
-    className = '',
-    pluginStatuses = {},
-    collectionId = '',
-    contentId = '',
-  } = options
+function isMarkdownEditorFieldType(fieldType: string): boolean {
+  return fieldType === 'markdown' || fieldType === 'mdxeditor' || fieldType === 'easymde'
+}
+
+function getEditorMetadata(fieldType: string): { family: string; provider: string } | null {
+  if (fieldType === 'richtext' || fieldType === 'tinymce') {
+    return {
+      family: 'richtext',
+      provider: 'tinymce',
+    }
+  }
+
+  if (isMarkdownEditorFieldType(fieldType)) {
+    return {
+      family: 'markdown',
+      provider: 'easymde',
+    }
+  }
+
+  return null
+}
+
+export function renderDynamicField(field: FieldDefinition, options: FieldRenderOptions = {}): string {
+  const { value = '', errors = [], disabled = false, className = '', pluginStatuses = {}, collectionId = '', contentId = '' } = options
   const opts = field.field_options || {}
   const required = field.is_required ? 'required' : ''
   const baseClasses = `w-full rounded-lg px-3 py-2 text-sm text-zinc-950 dark:text-white bg-white dark:bg-zinc-800 shadow-sm ring-1 ring-inset ring-zinc-950/10 dark:ring-white/10 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-shadow ${className}`
@@ -220,10 +231,10 @@ export function renderDynamicField(
   if (field.field_type === 'quill' && !pluginStatuses.quillEnabled) {
     fallbackToTextarea = true
     fallbackWarning = '⚠️ Quill Editor plugin is inactive. Using textarea fallback.'
-  } else if (field.field_type === 'mdxeditor' && !pluginStatuses.mdxeditorEnabled) {
+  } else if (isMarkdownEditorFieldType(field.field_type) && !pluginStatuses.mdxeditorEnabled) {
     fallbackToTextarea = true
-    fallbackWarning = '⚠️ MDXEditor plugin is inactive. Using textarea fallback.'
-  } else if (field.field_type === 'tinymce' && !pluginStatuses.tinymceEnabled) {
+    fallbackWarning = '⚠️ Markdown editor plugin is inactive. Using textarea fallback.'
+  } else if ((field.field_type === 'richtext' || field.field_type === 'tinymce') && !pluginStatuses.tinymceEnabled) {
     fallbackToTextarea = true
     fallbackWarning = '⚠️ TinyMCE plugin is inactive. Using textarea fallback.'
   }
@@ -362,8 +373,11 @@ export function renderDynamicField(
       break
 
     case 'richtext':
+    case 'tinymce':
+      {
+      const editorMetadata = getEditorMetadata(field.field_type)
       fieldHTML = `
-        <div class="richtext-container" data-height="${opts.height || 300}" data-toolbar="${opts.toolbar || 'full'}">
+        <div class="richtext-container" data-height="${opts.height || 300}" data-toolbar="${opts.toolbar || 'full'}" data-editor-family="${editorMetadata?.family || ''}" data-editor-provider="${editorMetadata?.provider || ''}">
           <textarea
             id="${fieldId}"
             name="${fieldName}"
@@ -374,6 +388,7 @@ export function renderDynamicField(
         </div>
       `
       break
+      }
 
     case 'quill':
       // Quill WYSIWYG Editor
@@ -400,11 +415,15 @@ export function renderDynamicField(
       `
       break
 
+    case 'markdown':
     case 'mdxeditor':
-      // MDXEditor Rich Text Editor - renders same container as richtext
-      // The MDXEditor plugin initialization script will handle the editor initialization
+    case 'easymde':
+      {
+      const editorMetadata = getEditorMetadata(field.field_type)
+      // Markdown editor fields use the EasyMDE-backed richtext container.
+      // The EasyMDE plugin initialization script handles activation.
       fieldHTML = `
-        <div class="richtext-container" data-height="${opts.height || 300}" data-toolbar="${opts.toolbar || 'full'}">
+        <div class="richtext-container" data-height="${opts.height || 300}" data-toolbar="${opts.toolbar || 'full'}" data-editor-family="${editorMetadata?.family || ''}" data-editor-provider="${editorMetadata?.provider || ''}">
           <textarea
             id="${fieldId}"
             name="${fieldName}"
@@ -415,6 +434,7 @@ export function renderDynamicField(
         </div>
       `
       break
+      }
 
     case 'number':
       fieldHTML = `
@@ -2256,15 +2276,11 @@ function getBlocksFieldScript(): string {
 
 function escapeHtml(text: string): string {
   if (typeof text !== 'string') return String(text || '')
-  return text.replace(
-    /[&<>"']/g,
-    (char) =>
-      ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;',
-      })[char] || char,
-  )
+  return text.replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char] || char))
 }

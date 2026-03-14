@@ -4,7 +4,7 @@
  * These types define the structure for collection configuration files.
  * Collections can be defined in TypeScript/JSON files and synced to the database.
  */
-type FieldType = 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'email' | 'url' | 'richtext' | 'markdown' | 'json' | 'array' | 'object' | 'reference' | 'media' | 'select' | 'multiselect' | 'checkbox' | 'radio' | 'textarea' | 'slug' | 'color' | 'file';
+type FieldType = 'string' | 'number' | 'boolean' | 'date' | 'datetime' | 'email' | 'url' | 'richtext' | 'markdown' | 'mdxeditor' | 'easymde' | 'quill' | 'tinymce' | 'json' | 'array' | 'object' | 'reference' | 'media' | 'select' | 'multiselect' | 'checkbox' | 'radio' | 'textarea' | 'slug' | 'color' | 'file';
 interface BlockDefinition {
     label?: string;
     description?: string;
