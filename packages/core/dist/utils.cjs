@@ -1,6 +1,6 @@
 'use strict';
 
-var chunkZ6L67YXK_cjs = require('./chunk-Z6L67YXK.cjs');
+var chunkZ6YTQGT5_cjs = require('./chunk-Z6YTQGT5.cjs');
 var chunkP3XDZL6Q_cjs = require('./chunk-P3XDZL6Q.cjs');
 var chunkRCQ2HIQD_cjs = require('./chunk-RCQ2HIQD.cjs');
 require('./chunk-IGJUBJBW.cjs');
@@ -9,55 +9,55 @@ require('./chunk-IGJUBJBW.cjs');
 
 Object.defineProperty(exports, "QueryFilterBuilder", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.QueryFilterBuilder; }
+  get: function () { return chunkZ6YTQGT5_cjs.QueryFilterBuilder; }
 });
 Object.defineProperty(exports, "SONICJS_VERSION", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.SONICJS_VERSION; }
+  get: function () { return chunkZ6YTQGT5_cjs.SONICJS_VERSION; }
 });
 Object.defineProperty(exports, "TemplateRenderer", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.TemplateRenderer; }
+  get: function () { return chunkZ6YTQGT5_cjs.TemplateRenderer; }
 });
 Object.defineProperty(exports, "buildQuery", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.buildQuery; }
+  get: function () { return chunkZ6YTQGT5_cjs.buildQuery; }
 });
 Object.defineProperty(exports, "escapeHtml", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.escapeHtml; }
+  get: function () { return chunkZ6YTQGT5_cjs.escapeHtml; }
 });
 Object.defineProperty(exports, "generateSlug", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.generateSlug; }
+  get: function () { return chunkZ6YTQGT5_cjs.generateSlug; }
 });
 Object.defineProperty(exports, "getBlocksFieldConfig", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.getBlocksFieldConfig; }
+  get: function () { return chunkZ6YTQGT5_cjs.getBlocksFieldConfig; }
 });
 Object.defineProperty(exports, "getCoreVersion", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.getCoreVersion; }
+  get: function () { return chunkZ6YTQGT5_cjs.getCoreVersion; }
 });
 Object.defineProperty(exports, "parseBlocksValue", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.parseBlocksValue; }
+  get: function () { return chunkZ6YTQGT5_cjs.parseBlocksValue; }
 });
 Object.defineProperty(exports, "renderTemplate", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.renderTemplate; }
+  get: function () { return chunkZ6YTQGT5_cjs.renderTemplate; }
 });
 Object.defineProperty(exports, "sanitizeInput", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.sanitizeInput; }
+  get: function () { return chunkZ6YTQGT5_cjs.sanitizeInput; }
 });
 Object.defineProperty(exports, "sanitizeObject", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.sanitizeObject; }
+  get: function () { return chunkZ6YTQGT5_cjs.sanitizeObject; }
 });
 Object.defineProperty(exports, "templateRenderer", {
   enumerable: true,
-  get: function () { return chunkZ6L67YXK_cjs.templateRenderer; }
+  get: function () { return chunkZ6YTQGT5_cjs.templateRenderer; }
 });
 Object.defineProperty(exports, "generateInstallationId", {
   enumerable: true,
